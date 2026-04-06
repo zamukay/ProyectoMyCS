@@ -1,32 +1,136 @@
-## ✨  E-Commerce Online Shop Design ✨
-E-Commerce Online Shop Design made in HTML5 &amp; SCSS with JavaScript.
+## 🛍️ Proyecto: Manejo y Configuración de Software (Parcial 1)
 
-https://gosiacodes.github.io/E-Commerce-Online-Shop-Design/
+### 📖 Descripción
 
-## :pushpin: _How does the website look?_
+Este proyecto consiste en un **sitio web de e-commerce** desarrollado con **HTML5, SCSS y JavaScript**, enfocado en simular una tienda online moderna y responsiva.
 
-Example for shop with cameras and accessories.
+Incluye funcionalidades como:
 
-For now it has index page, products page (when you click on "Cameras") and shopping cart page (when you click on shopping cart icon).
+* Visualización de productos 🛒
+* Carrito de compras 🧺
+* Proceso de checkout 💳
+* Formulario de contacto 📩
+* Productos con variaciones de color mediante imágenes 🎨
 
-In the future comes updates (e.g. product page).
+---
 
-Website has responsive design.
+### 🎯 Objetivos
 
-## :pushpin: _GUI examples - web_
+* 💻 Desarrollar una interfaz atractiva y funcional
+* 🖼️ Implementar productos con variantes visuales (colores)
+* 🛒 Simular un sistema básico de carrito de compras
+* 📬 Crear un formulario de contacto funcional (simulado)
+* 📱 Garantizar diseño responsivo en múltiples dispositivos
 
-![Example index 1](/img/Online_Shop_1.png)
+---
 
-![Example index 2](/img/Online_Shop_2.png)
+### 🧩 Estructura del Proyecto
 
-![Example index 3](/img/Online_Shop_3.png)
+| Carpeta / Archivo | Descripción                       |
+| ----------------- | --------------------------------- |
+| `/css/`           | Estilos CSS 🎨                    |
+| `/scss/`          | Archivos fuente SCSS 💅           |
+| `/js/`            | Scripts JavaScript ⚙️             |
+| `/img/`           | Imágenes de productos 📸          |
+| `/lib/`           | Librerías externas 📚             |
+| `/mail/`          | Simulación de envío de correos ✉️ |
+| `index.html`      | Página principal 🏠               |
+| `shop.html`       | Página de tienda 🛍️              |
+| `cart.html`       | Carrito de compras 🛒             |
+| `checkout.html`   | Proceso de pago 💳                |
+| `detail.html`     | Detalles del producto 🔍          |
+| `contact.html`    | Página de contacto 📞             |
+| `.gitignore`      | Archivos ignorados 🚫             |
+| `README.md`       | Documentación del proyecto 📘     |
 
-![Example index 4](/img/Online_Shop_4.png)
+---
 
-![Example index 5](/img/Online_Shop_5.png)
+### ⚙️ Instalación y Configuración
 
-## :pushpin: _GUI examples - mobile_
+#### 🔧 Requisitos
 
-<img src="/img/Online_Shop_6.png" width="300" height="auto" alt="Example index 6"/>
+* 🌐 Navegador web moderno (Chrome, Edge, Firefox, etc.)
+* 🧠 Editor de código (recomendado: VS Code)
+* 🧰 Git instalado
 
-<img src="/img/Online_Shop_7.png" width="300" height="auto" alt="Example index 7"/>
+#### 🚀 Pasos
+
+```bash
+git clone https://github.com/zamukay/Proyecto1.git
+cd Proyecto1
+```
+
+Luego abre:
+
+```bash
+index.html
+```
+
+en tu navegador.
+
+---
+
+### 💡 Uso del Proyecto
+
+* 🛍️ Explora productos en `shop.html`
+* 🛒 Añade productos en `cart.html`
+* 💳 Simula una compra en `checkout.html`
+* 🔍 Revisa detalles en `detail.html`
+* 📩 Usa el formulario en `contact.html`
+
+---
+
+### 🖥️ Vista del Proyecto
+
+#### 🌐 Versión Web
+
+![Vista 1](./img/Online_Shop_1.png)
+![Vista 2](./img/Online_Shop_2.png)
+![Vista 3](./img/Online_Shop_3.png)
+
+---
+
+#### 📱 Versión Mobile
+
+<img src="./img/Online_Shop_6.png" width="300"/>  
+<img src="./img/Online_Shop_7.png" width="300"/>  
+
+---
+
+### 🧑‍💻 Contribuciones
+
+Este proyecto es colaborativo. Para contribuir:
+
+1. Crea una rama con Git Flow:
+
+```bash
+git flow feature start nombre-feature
+```
+
+2. Realiza tus cambios y haz commit
+3. Finaliza la feature:
+
+```bash
+git flow feature finish nombre-feature
+```
+
+---
+
+### 🐞 Soporte
+
+Si encuentras errores:
+
+* 📌 Abre un issue en GitHub
+
+---
+
+### 🙌 Créditos
+
+Proyecto académico desarrollado para la materia de
+**Manejo y Configuración de Software**
+
+---
+
+### ⭐ Nota
+
+Este proyecto es una **simulación académica**, no incluye pagos reales ni backend funcional.
