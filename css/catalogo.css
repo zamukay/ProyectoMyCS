@@ -1,0 +1,160 @@
+/* ==========================================================================
+   Catálogo de Productos - Grid y Estilos Específicos
+   ========================================================================== */
+
+/* 
+  EL PODER DE CSS GRID:
+  Mágicamente responsivo sin necesidad de media queries manuales por breakpoint.
+  auto-fill + minmax() asegura que entren tantas columnas como sean posibles
+  mientras midan al menos 280px.
+*/
+#contenedor-productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    align-items: stretch;
+}
+
+/* --- Tarjeta del Producto --- */
+.producto-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    overflow: hidden;
+    /* Sombras y transiciones para un look moderno de E-commerce */
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+}
+
+.producto-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* --- Contenedor de Imagen --- */
+.producto-img-container {
+    position: relative;
+    width: 100%;
+    /* Truco para mantener una relación de aspecto consistente 4:3 aprox */
+    padding-top: 75%;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #f1f3f5;
+}
+
+.producto-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Fundamental en tecnología para no recortar bordes de monitores/gabinetes */
+    padding: 1.5rem;
+}
+
+/* --- Badges de Estado --- */
+.producto-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 0.35em 0.8em;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 4px;
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    z-index: 10;
+}
+
+.badge-oferta {
+    background-color: #ffc107; /* Warning / Gold */
+    color: #212529; /* Texto oscuro para contraste */
+}
+
+.badge-nuevo {
+    background-color: #198754; /* Success */
+}
+
+.badge-agotado {
+    background-color: #dc3545; /* Danger */
+}
+
+/* --- Cuerpo de la Tarjeta --- */
+.producto-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    /* flex-grow: 1 hace que este contenedor empuje a mt-auto siempre hacia abajo */
+    flex-grow: 1;
+}
+
+.producto-categoria {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #adb5bd;
+    margin-bottom: 0.4rem;
+    letter-spacing: 1px;
+}
+
+.producto-titulo {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #212529;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+    /* Lograr que el titulo ocupe 2 lineas o termine en puntos suspensivos si es loco de largo */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.producto-precio {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #0d6efd; /* Primary */
+    margin-bottom: 0.5rem;
+}
+
+.producto-stock {
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin-bottom: 0;
+}
+
+/* --- Filtros de Categoría --- */
+/* Customizando los botones encima de Bootstrap para darles look de "pill" (píldora) */
+.filtro-btn {
+    border-radius: 20px; /* Bordes bien redondeados */
+    font-weight: 600;
+    padding: 0.4rem 1.25rem;
+    transition: all 0.2s ease;
+}
+
+/* Estilo cuando está activo el filtro */
+.filtro-btn.activo {
+    background-color: #0d6efd;
+    color: #fff;
+    border-color: #0d6efd;
+    box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3); /* Le damos un brillito extra */
+}
+
+/* Si es outline (inactivo), le sacamos el fondo fuerte pero mantenemos el outline de bootstrap */
+.filtro-btn:not(.activo):hover {
+    background-color: rgba(13, 110, 253, 0.1);
+    color: #0d6efd;
+}
+
+/* Esconder barra de scroll en móviles si la zona de botones hace overflow horizontal */
+#filtros-categoria {
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+}
+#filtros-categoria::-webkit-scrollbar {
+    display: none;
+}
