@@ -7,16 +7,31 @@ const prod1 = {
   imgSrc: "img/nayris-aquino-Lidm0GHUL-0-unsplash.jpg",
   name: "Nikon D3200",
   price: 599,
+  specs: {
+    ram: "16GB",
+    cpu: "Intel i7",
+    storage: "512GB SSD"
+  }
 };
 const prod2 = {
   imgSrc: "img/mikedelta-zUnc4-eHw6E-unsplash.jpg",
   name: "Pentax MZ-50",
   price: 299,
+  specs: {
+    ram: "8GB",
+    cpu: "Intel i5",
+    storage: "256GB SSD"
+  }
 };
 const prod3 = {
   imgSrc: "img/rohit-jawalkar-bZvX1kozeRg-unsplash.jpg",
   name: "Canon E0S",
   price: 699,
+  specs: {
+    ram: "32GB",
+    cpu: "Intel i9",
+    storage: "1TB SSD"
+  }
 };
 
 const arr = [
@@ -87,6 +102,16 @@ const createProd = (imgSrc, name, price, check) => {
   prodDesc.innerText =
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis sunt quam alias soluta ad, labore quas velit rem dolorum eius cum laboriosam magni provident similique!";
   buttonMore.innerText = "More info";
+
+  // Add event listener to More info button
+  buttonMore.addEventListener('click', () => {
+    // Find the product object
+    const product = arr.find(p => p.name === name && p.price === price);
+    if (product) {
+      localStorage.setItem('selectedProduct', JSON.stringify(product));
+      window.location.href = 'detalle.html';
+    }
+  });
 
   // Add classes on elements
   priceProd.className = "price";
@@ -162,5 +187,41 @@ const hamburgerMenu = () => {
     x.style.display = "none";
   } else {
     x.style.display = "block";
+  }
+};
+
+// Function to display product detail on detalle.html
+const displayProductDetail = () => {
+  const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
+  if (selectedProduct) {
+    document.querySelector('.product-detail img').src = selectedProduct.imgSrc;
+    const titleElement = document.querySelector('.product-detail .card-title');
+    titleElement.innerText = selectedProduct.name;
+    titleElement.style.color = '#fff';
+    const priceElement = document.querySelector('.product-detail .price');
+    priceElement.innerText = '$' + selectedProduct.price;
+    priceElement.style.color = '#00e5b0';
+    const specsContainer = document.querySelector('.specs-section');
+    specsContainer.innerHTML = `
+      <h4 class="mb-3" style="color:#00e5b0;">Especificaciones Técnicas</h4>
+      <div class="spec-item d-flex align-items-center mb-3">
+        <i class="fas fa-memory fa-lg me-3" style="color:#00e5b0;"></i>
+        <div>
+          <strong style="color:#fff;">RAM:</strong> <span style="color:#00e5b0;">${selectedProduct.specs.ram}</span>
+        </div>
+      </div>
+      <div class="spec-item d-flex align-items-center mb-3">
+        <i class="fas fa-microchip fa-lg me-3" style="color:#00e5b0;"></i>
+        <div>
+          <strong style="color:#fff;">CPU:</strong> <span style="color:#00e5b0;">${selectedProduct.specs.cpu}</span>
+        </div>
+      </div>
+      <div class="spec-item d-flex align-items-center mb-3">
+        <i class="fas fa-hdd fa-lg me-3" style="color:#00e5b0;"></i>
+        <div>
+          <strong style="color:#fff;">Almacenamiento:</strong> <span style="color:#00e5b0;">${selectedProduct.specs.storage}</span>
+        </div>
+      </div>
+    `;
   }
 };
