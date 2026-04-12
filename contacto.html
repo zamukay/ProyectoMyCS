@@ -9,6 +9,7 @@
     <link href="css/contacto.css" rel="stylesheet" />
     <script src="js/catalogo-productos.js" defer></script>
     <script src="js/main.js" defer></script>
+    <script src="js/contacto.js" defer></script>
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link href="https://fonts.googleapis.com/css2?family=Quantico&family=Roboto&family=Varela+Round&display=swap" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/3318035e44.js"></script>
@@ -93,7 +94,7 @@
                             </div>
                             <div class="contact-item-text">
                                 <strong>Ubicación</strong>
-                                <span>Ecuador — Universidad</span>
+                                <span>Ecuador — Ambato</span>
                             </div>
                         </div>
 
@@ -103,7 +104,7 @@
                             </div>
                             <div class="contact-item-text">
                                 <strong>Email</strong>
-                                <span>grupo4@bestphotoshot.ec</span>
+                                <span>grupo4@gmail.com</span>
                             </div>
                         </div>
 
@@ -113,7 +114,7 @@
                             </div>
                             <div class="contact-item-text">
                                 <strong>Disponibilidad</strong>
-                                <span>Lunes a Viernes, 9am – 6pm</span>
+                                <span>Lunes a Viernes, 9am – 5pm</span>
                             </div>
                         </div>
 
@@ -123,7 +124,7 @@
                             </div>
                             <div class="contact-item-text">
                                 <strong>Teléfono</strong>
-                                <span>+593 99 000 0000</span>
+                                <span>+593 99 354 1542</span>
                             </div>
                         </div>
 
@@ -159,8 +160,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="mensaje">Mensaje <span class="required">*</span></label>
-                                <textarea id="mensaje" name="mensaje" rows="5" placeholder="Escribe tu mensaje aquí..." required></textarea>
+                                <label for="mensaje">Queja, sugerencia o duda <span class="required">*</span></label>
+                                <textarea id="mensaje" name="mensaje" rows="5" placeholder="Describe tu queja, sugerencia o duda aquí..." required></textarea>
                             </div>
 
                             <button type="submit" class="contact-btn">
@@ -168,14 +169,17 @@
                                 <span>Enviar mensaje</span>
                             </button>
 
-                            <div id="form-success" class="form-success hidden">
+                            <div id="form-success" class="form-success hidden" role="status" aria-live="polite">
                                 <i class="fas fa-check-circle"></i>
                                 ¡Mensaje enviado correctamente! Te responderemos pronto.
                             </div>
-                            <div id="form-error" class="form-error hidden">
+                            <div id="form-error" class="form-error hidden" role="alert" aria-live="assertive">
                                 <i class="fas fa-exclamation-circle"></i>
                                 Por favor completa todos los campos obligatorios.
                             </div>
+                            <p class="contact-note">
+                                Este mensaje no se envía realmente por correo; es una confirmación visual dentro de esta página.
+                            </p>
                         </form>
                     </div>
                 </div>
