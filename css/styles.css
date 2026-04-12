@@ -293,40 +293,69 @@
     }
 }
 
-/* Catálogo: imágenes con mismo recuadro (object-fit) */
+/* Catálogo: tarjetas de producto consistentes y imágenes sin deformación */
+.img-products {
+    padding: 1rem;
+    border: 3px solid #030303;
+    margin: 1rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 28rem;
+    overflow: hidden;
+}
+
 .img-products img {
     width: 100%;
     max-width: 16rem;
-    height: 13rem;
+    height: 250px;
     object-fit: cover;
     object-position: center;
     display: block;
+    border-radius: 0.75rem;
 }
 
 @media only screen and (max-width: 1050px) {
+    .img-products {
+        min-height: 25rem;
+    }
+
     .img-products img {
         max-width: 13.5rem;
-        height: 11rem;
+        height: 220px;
     }
 }
 
 @media only screen and (max-width: 800px) {
+    .img-products {
+        min-height: 24rem;
+    }
+
     .img-products img {
         max-width: 10rem;
-        height: 10rem;
+        height: 180px;
     }
 }
 
 @media only screen and (max-width: 600px) {
+    .img-products {
+        min-height: 22rem;
+    }
+
     .img-products img {
         max-width: 15rem;
-        height: 12rem;
+        height: 200px;
     }
 }
 
 @media only screen and (max-width: 450px) {
+    .img-products {
+        min-height: 20rem;
+    }
+
     .img-products img {
         max-width: 15rem;
-        height: 11rem;
+        height: 180px;
     }
 }
