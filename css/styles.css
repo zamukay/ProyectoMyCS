@@ -217,3 +217,116 @@
         transform: translateY(0);
     }
 }
+
+.cart-empty-msg {
+    padding: 1rem;
+    color: #ccc;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.5;
+    max-width: 22rem;
+}
+
+/* Carrito: columnas sin estirarse a la misma altura; resumen arriba (desktop) */
+@media only screen and (min-width: 701px) {
+    .summary-shopping-cart {
+        align-items: flex-start;
+    }
+
+    .summary-shopping-cart .shopping-cart,
+    .summary-shopping-cart .order-summary {
+        align-self: flex-start;
+    }
+
+    .summary-shopping-cart .order-summary > .order-summary-column {
+        justify-content: flex-start;
+    }
+}
+
+.cart-qty-btn,
+.cart-remove-btn {
+    background: transparent;
+    border: none;
+    padding: 0.25rem;
+    cursor: pointer;
+    color: inherit;
+    font-size: inherit;
+    line-height: 1;
+}
+
+.cart-qty-btn:hover,
+.cart-remove-btn:hover {
+    color: #00e5b0;
+}
+
+.cart-favorite-icon {
+    pointer-events: none;
+    opacity: 0.85;
+}
+
+/* Lista del carrito: altura acotada y scroll interno */
+#prod-cart.cart-prod-container {
+    max-height: min(50vh, 28rem);
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 0;
+    scrollbar-gutter: stable;
+}
+
+#prod-cart.cart-prod-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+#prod-cart.cart-prod-container::-webkit-scrollbar-track {
+    background: #1d1c29;
+    border-radius: 4px;
+}
+
+#prod-cart.cart-prod-container::-webkit-scrollbar-thumb {
+    background: #00e5b0;
+    border-radius: 4px;
+}
+
+@media only screen and (max-width: 700px) {
+    #prod-cart.cart-prod-container {
+        max-height: min(45vh, 22rem);
+    }
+}
+
+/* Catálogo: imágenes con mismo recuadro (object-fit) */
+.img-products img {
+    width: 100%;
+    max-width: 16rem;
+    height: 13rem;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+@media only screen and (max-width: 1050px) {
+    .img-products img {
+        max-width: 13.5rem;
+        height: 11rem;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .img-products img {
+        max-width: 10rem;
+        height: 10rem;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .img-products img {
+        max-width: 15rem;
+        height: 12rem;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .img-products img {
+        max-width: 15rem;
+        height: 11rem;
+    }
+}

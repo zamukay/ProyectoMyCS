@@ -1,90 +1,92 @@
-// Variables
+﻿// Variables
 const prodContProd = document.querySelector("#products");
 const prodContIndex = document.querySelector("#prod-index");
 const prodContCart = document.querySelector("#prod-cart");
 
-const prod1 = {
-  imgSrc: "img/nayris-aquino-Lidm0GHUL-0-unsplash.jpg",
-  name: "Nikon D3200",
-  price: 599,
-  specs: {
-    ram: "16GB",
-    cpu: "Intel i7",
-    storage: "512GB SSD"
-  }
-};
-const prod2 = {
-  imgSrc: "img/mikedelta-zUnc4-eHw6E-unsplash.jpg",
-  name: "Pentax MZ-50",
-  price: 299,
-  specs: {
-    ram: "8GB",
-    cpu: "Intel i5",
-    storage: "256GB SSD"
-  }
-};
-const prod3 = {
-  imgSrc: "img/rohit-jawalkar-bZvX1kozeRg-unsplash.jpg",
-  name: "Canon E0S",
-  price: 699,
-  specs: {
-    ram: "32GB",
-    cpu: "Intel i9",
-    storage: "1TB SSD"
+const arr = window.CATALOGO_PRODUCTOS || [];
+
+const getCart = () => {
+  try {
+    const raw = localStorage.getItem("cart");
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
   }
 };
 
-const arr = [
-  prod1,
-  prod2,
-  prod3,
-  prod1,
-  prod2,
-  prod3,
-  prod1,
-  prod2,
-  prod3,
-  prod1,
-  prod2,
-  prod3,
-];
+const saveCart = (items) => {
+  localStorage.setItem("cart", JSON.stringify(items));
+};
 
-// Function to display products on products.html
+/** Añade o incrementa cantidad; formato compatible con checkout.js */
+const addToCart = (product, qty = 1) => {
+  const cart = getCart();
+  const id = product.id;
+  const existing = cart.find((i) => i.id === id);
+  if (existing) {
+    existing.quantity = (parseInt(existing.quantity, 10) || 1) + qty;
+  } else {
+    cart.push({
+      id,
+      name: product.name,
+      price: product.price,
+      quantity: qty,
+      imgSrc: product.imgSrc,
+    });
+  }
+  saveCart(cart);
+};
+
+const removeLineFromCart = (productId) => {
+  saveCart(getCart().filter((line) => line.id !== productId));
+};
+
+/** delta +1 / -1; si la cantidad queda ≤ 0 se elimina la línea */
+const changeLineQuantity = (productId, delta) => {
+  const cart = getCart();
+  const idx = cart.findIndex((line) => line.id === productId);
+  if (idx === -1) return;
+  const line = cart[idx];
+  const q = (parseInt(line.quantity, 10) || 1) + delta;
+  if (q <= 0) {
+    cart.splice(idx, 1);
+  } else {
+    line.quantity = q;
+  }
+  saveCart(cart);
+};
+
 const displayProducts = () => {
+  if (!prodContProd) return;
   for (let i = 0; i < arr.length; i++) {
-    // Get values
-    let imgSrc = arr[i].imgSrc;
-    let name = arr[i].name;
-    let price = arr[i].price;
-    const check = "prod";
-    createProd(imgSrc, name, price, check);
+    createProd(arr[i], "prod");
   }
 };
 
-// Function to display products on index.html
 const displayProdIndex = () => {
-  for (let i = 0; i < 3; i++) {
-    // Get values
-    let imgSrc = arr[i].imgSrc;
-    let name = arr[i].name;
-    let price = arr[i].price;
-    const check = "index";
-    createProd(imgSrc, name, price, check);
+  if (!prodContIndex) return;
+  const n = Math.min(3, arr.length);
+  for (let i = 0; i < n; i++) {
+    createProd(arr[i], "index");
   }
 };
 
 const displayProdCart = () => {
-  for (let i = 0; i < 2; i++) {
-    // Get values
-    let imgSrc = arr[i].imgSrc;
-    let name = arr[i].name;
-    let price = arr[i].price;
-    createCartProd(imgSrc, name, price);
+  if (!prodContCart) return;
+  prodContCart.innerHTML = "";
+  const cart = getCart();
+  if (cart.length === 0) {
+    const empty = document.createElement("p");
+    empty.className = "cart-empty-msg";
+    empty.textContent = "Tu carrito está vacío. Explora el catálogo y añade productos.";
+    prodContCart.appendChild(empty);
+  } else {
+    cart.forEach((line) => createCartProd(line));
   }
+  updateCartSummarySidebar();
 };
 
-// Function to create elements
-const createProd = (imgSrc, name, price, check) => {
+const createProd = (product, check) => {
   let divProd = document.createElement("div");
   let imgProd = document.createElement("img");
   let nameProd = document.createElement("h4");
@@ -94,26 +96,23 @@ const createProd = (imgSrc, name, price, check) => {
   let prodDesc = document.createElement("p");
   let buttonMore = document.createElement("button");
 
-  // Set values on elements
-  imgProd.src = imgSrc;
-  nameProd.innerText = name;
-  priceProd.innerText = "$" + price;
-  buttonProd.innerText = "Add to cart";
-  prodDesc.innerText =
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis sunt quam alias soluta ad, labore quas velit rem dolorum eius cum laboriosam magni provident similique!";
-  buttonMore.innerText = "More info";
+  imgProd.src = product.imgSrc;
+  nameProd.innerText = product.name;
+  priceProd.innerText = "$" + product.price;
+  buttonProd.innerText = "Añadir al carrito";
+  prodDesc.innerText = product.shortDesc || "";
+  buttonMore.innerText = "Más información";
 
-  // Add event listener to More info button
-  buttonMore.addEventListener('click', () => {
-    // Find the product object
-    const product = arr.find(p => p.name === name && p.price === price);
-    if (product) {
-      localStorage.setItem('selectedProduct', JSON.stringify(product));
-      window.location.href = 'detalle.html';
-    }
+  buttonMore.addEventListener("click", () => {
+    localStorage.setItem("selectedProduct", JSON.stringify(product));
+    window.location.href = "detalle.html";
   });
 
-  // Add classes on elements
+  buttonProd.addEventListener("click", (e) => {
+    e.stopPropagation();
+    addToCart(product, 1);
+  });
+
   priceProd.className = "price";
   buttonProd.className = "atc-btn";
   buttonMore.className = "rm-btn";
@@ -121,7 +120,6 @@ const createProd = (imgSrc, name, price, check) => {
   prodDesc.className = "description";
   divProd.className = "img-products";
 
-  // Add elements to div
   divOverlay.appendChild(prodDesc);
   divOverlay.appendChild(buttonMore);
   divOverlay.appendChild(buttonProd);
@@ -129,58 +127,119 @@ const createProd = (imgSrc, name, price, check) => {
   divProd.appendChild(nameProd);
   divProd.appendChild(priceProd);
   divProd.appendChild(divOverlay);
-  if (check === "prod") {
+  if (check === "prod" && prodContProd) {
     prodContProd.appendChild(divProd);
-  } else if (check === "index") {
+  } else if (check === "index" && prodContIndex) {
     prodContIndex.appendChild(divProd);
   }
 };
 
-const createCartProd = (imgSrc, name, price) => {
+const createCartProd = (line) => {
+  const qty = parseInt(line.quantity, 10) || 1;
+  const productId = line.id;
   let divProd = document.createElement("div");
   let imgProd = document.createElement("img");
   let descProd = document.createElement("div");
   let nameProd = document.createElement("h4");
   let priceProd = document.createElement("p");
   let amountDiv = document.createElement("div");
-  let plusIcon = document.createElement("i");
-  let minusIcon = document.createElement("i");
   let amount = document.createElement("p");
   let icons = document.createElement("div");
-  let closeIcon = document.createElement("p");
-  let favoriteIcon = document.createElement("i");
 
-  // Set values on elements
-  imgProd.src = imgSrc;
-  nameProd.innerText = name;
-  priceProd.innerText = "$" + price;
-  amount.innerText = " 1 ";
+  const btnMinus = document.createElement("button");
+  btnMinus.type = "button";
+  btnMinus.className = "cart-qty-btn";
+  btnMinus.setAttribute("aria-label", "Reducir cantidad");
+  const minusIcon = document.createElement("i");
+  minusIcon.className = "fa-regular fa-square-minus";
+  btnMinus.appendChild(minusIcon);
+
+  const btnPlus = document.createElement("button");
+  btnPlus.type = "button";
+  btnPlus.className = "cart-qty-btn";
+  btnPlus.setAttribute("aria-label", "Aumentar cantidad");
+  const plusIcon = document.createElement("i");
+  plusIcon.className = "fa-regular fa-square-plus";
+  btnPlus.appendChild(plusIcon);
+
+  const btnRemove = document.createElement("button");
+  btnRemove.type = "button";
+  btnRemove.className = "cart-remove-btn";
+  btnRemove.setAttribute("aria-label", "Quitar del carrito");
+  const closeIcon = document.createElement("i");
+  closeIcon.className = "fa-regular fa-rectangle-xmark";
+  btnRemove.appendChild(closeIcon);
+
+  let favoriteIcon = document.createElement("i");
+  favoriteIcon.className = "fa-solid fa-heart cart-favorite-icon";
+  favoriteIcon.setAttribute("aria-hidden", "true");
+
+  imgProd.src = line.imgSrc;
+  nameProd.innerText = line.name;
+  priceProd.innerText = "$" + line.price;
+  amount.innerText = " " + qty + " ";
 
   divProd.className = "cart-prod";
   descProd.className = "desc-prod";
   amountDiv.className = "amount-div";
-  plusIcon.className = "fa-regular fa-square-plus";
-  minusIcon.className = "fa-regular fa-square-minus";
   icons.className = "cart-icons";
-  closeIcon.className = "fa-regular fa-rectangle-xmark";
-  favoriteIcon.className = "fa-solid fa-heart";
 
-  // Add elements to div
+  btnRemove.addEventListener("click", () => {
+    removeLineFromCart(productId);
+    displayProdCart();
+  });
+  btnPlus.addEventListener("click", () => {
+    changeLineQuantity(productId, 1);
+    displayProdCart();
+  });
+  btnMinus.addEventListener("click", () => {
+    changeLineQuantity(productId, -1);
+    displayProdCart();
+  });
+
   divProd.appendChild(imgProd);
   descProd.appendChild(nameProd);
   descProd.appendChild(priceProd);
-  amountDiv.appendChild(minusIcon);
+  amountDiv.appendChild(btnMinus);
   amountDiv.appendChild(amount);
-  amountDiv.appendChild(plusIcon);
+  amountDiv.appendChild(btnPlus);
   descProd.appendChild(amountDiv);
   divProd.appendChild(descProd);
-  icons.appendChild(closeIcon);
+  icons.appendChild(btnRemove);
   icons.appendChild(favoriteIcon);
   divProd.appendChild(icons);
   prodContCart.appendChild(divProd);
 };
 
-// Function for mobile menu
+/** Actualiza subtotal/total en shopping-cart.html si existen los nodos */
+const updateCartSummarySidebar = () => {
+  const subEl = document.getElementById("cart-subtotal-amount");
+  const totalEl = document.getElementById("cart-total-amount");
+  if (!subEl && !totalEl) return;
+  const cart = getCart();
+  let sub = 0;
+  cart.forEach((line) => {
+    const price = parseFloat(line.price) || 0;
+    const q = parseInt(line.quantity, 10) || 1;
+    sub += price * q;
+  });
+  const formatted = "$" + sub.toFixed(2);
+  if (subEl) subEl.textContent = formatted;
+  if (totalEl) totalEl.textContent = formatted;
+};
+
+const initDetalleAddToCart = () => {
+  const btn = document.getElementById("btn-agregar");
+  if (!btn) return;
+  btn.addEventListener("click", () => {
+    const raw = localStorage.getItem("selectedProduct");
+    if (!raw) return;
+    addToCart(JSON.parse(raw), 1);
+  });
+};
+
+document.addEventListener("DOMContentLoaded", initDetalleAddToCart);
+
 const hamburgerMenu = () => {
   var x = document.getElementById("myLinks");
   if (x.style.display === "block") {
@@ -190,36 +249,76 @@ const hamburgerMenu = () => {
   }
 };
 
-// Function to display product detail on detalle.html
 const displayProductDetail = () => {
-  const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
-  if (selectedProduct) {
-    document.querySelector('.product-detail img').src = selectedProduct.imgSrc;
-    const titleElement = document.querySelector('.product-detail .card-title');
-    titleElement.innerText = selectedProduct.name;
-    titleElement.style.color = '#fff';
-    const priceElement = document.querySelector('.product-detail .price');
-    priceElement.innerText = '$' + selectedProduct.price;
-    priceElement.style.color = '#00e5b0';
-    const specsContainer = document.querySelector('.specs-section');
+  const raw = localStorage.getItem("selectedProduct");
+  if (!raw) return;
+  const selectedProduct = JSON.parse(raw);
+  const imgEl = document.querySelector(".product-detail img");
+  const titleElement = document.querySelector(".product-detail .card-title");
+  const priceElement = document.querySelector(".product-detail .price");
+  const specsContainer = document.querySelector(".specs-section");
+  if (!imgEl || !titleElement || !priceElement || !specsContainer) return;
+
+  imgEl.src = selectedProduct.imgSrc;
+  titleElement.innerText = selectedProduct.name;
+  titleElement.style.color = "#fff";
+  priceElement.innerText = "$" + selectedProduct.price;
+  priceElement.style.color = "#00e5b0";
+
+  const s = selectedProduct.specs || {};
+  if (selectedProduct.category === "laptop") {
     specsContainer.innerHTML = `
-      <h4 class="mb-3" style="color:#00e5b0;">Especificaciones Técnicas</h4>
+      <h4 class="mb-3" style="color:#00e5b0;">Especificaciones técnicas</h4>
       <div class="spec-item d-flex align-items-center mb-3">
         <i class="fas fa-memory fa-lg me-3" style="color:#00e5b0;"></i>
         <div>
-          <strong style="color:#fff;">RAM:</strong> <span style="color:#00e5b0;">${selectedProduct.specs.ram}</span>
+          <strong style="color:#fff;">RAM:</strong> <span style="color:#00e5b0;">${s.ram}</span>
         </div>
       </div>
       <div class="spec-item d-flex align-items-center mb-3">
         <i class="fas fa-microchip fa-lg me-3" style="color:#00e5b0;"></i>
         <div>
-          <strong style="color:#fff;">CPU:</strong> <span style="color:#00e5b0;">${selectedProduct.specs.cpu}</span>
+          <strong style="color:#fff;">CPU:</strong> <span style="color:#00e5b0;">${s.cpu}</span>
+        </div>
+      </div>
+      <div class="spec-item d-flex align-items-center mb-3">
+        <i class="fas fa-gamepad fa-lg me-3" style="color:#00e5b0;"></i>
+        <div>
+          <strong style="color:#fff;">GPU:</strong> <span style="color:#00e5b0;">${s.gpu}</span>
         </div>
       </div>
       <div class="spec-item d-flex align-items-center mb-3">
         <i class="fas fa-hdd fa-lg me-3" style="color:#00e5b0;"></i>
         <div>
-          <strong style="color:#fff;">Almacenamiento:</strong> <span style="color:#00e5b0;">${selectedProduct.specs.storage}</span>
+          <strong style="color:#fff;">Almacenamiento:</strong> <span style="color:#00e5b0;">${s.storage}</span>
+        </div>
+      </div>
+      <div class="spec-item d-flex align-items-center mb-3">
+        <i class="fas fa-tv fa-lg me-3" style="color:#00e5b0;"></i>
+        <div>
+          <strong style="color:#fff;">Pantalla:</strong> <span style="color:#00e5b0;">${s.screen}</span>
+        </div>
+      </div>
+    `;
+  } else {
+    specsContainer.innerHTML = `
+      <h4 class="mb-3" style="color:#00e5b0;">Características</h4>
+      <div class="spec-item d-flex align-items-center mb-3">
+        <i class="fas fa-star fa-lg me-3" style="color:#00e5b0;"></i>
+        <div>
+          <strong style="color:#fff;">Destacado:</strong> <span style="color:#00e5b0;">${s.destacado}</span>
+        </div>
+      </div>
+      <div class="spec-item d-flex align-items-center mb-3">
+        <i class="fas fa-plug fa-lg me-3" style="color:#00e5b0;"></i>
+        <div>
+          <strong style="color:#fff;">Conexión:</strong> <span style="color:#00e5b0;">${s.conexion}</span>
+        </div>
+      </div>
+      <div class="spec-item d-flex align-items-center mb-3">
+        <i class="fas fa-check-circle fa-lg me-3" style="color:#00e5b0;"></i>
+        <div>
+          <strong style="color:#fff;">Compatibilidad:</strong> <span style="color:#00e5b0;">${s.compatibilidad}</span>
         </div>
       </div>
     `;
