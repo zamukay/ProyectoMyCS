@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -7,14 +7,29 @@
     <meta name="author" content="Malgorzata Pick" />
     <meta
       name="description"
-      content="Malgorzata Pick | Web design | E-handel | E-commerce | Online shop | Online boutique | Onlinebutik"
+      content="GameTech Store — laptops gaming, periféricos y accesorios. Envíos y ofertas."
     />
     <meta
       name="keywords"
       content="web design, webbdesign, e-commerce, e-handel, online shop, online boutique, onlinebutik, web developer, webbutvecklare, front-end developer, front-end-utvecklare, utvecklare, front-end, frontend, HTML, CSS, JavaScript, Malgorzata Pick"
     />
+
+    <!-- 1) Bootstrap CSS (primero para que los demás lo pisen) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- 2) Estilos originales del proyecto -->
     <link href="css/styles.css" rel="stylesheet" />
+<script src="js/catalogo-productos.js" defer></script>
+
+    <!-- 3) Navbar TechStore — PR #1 -->
+    <link href="css/navbar.css" rel="stylesheet" />
+
+    <!-- 4) Hero TechStore — PR #2 -->
+    <link href="css/hero.css" rel="stylesheet" />
+    
     <script src="js/main.js" defer></script>
+    <script src="js/navbar.js" defer></script>
+
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Quantico&family=Roboto&family=Varela+Round&display=swap"
@@ -22,53 +37,73 @@
     />
     <script src="https://kit.fontawesome.com/3318035e44.js"></script>
     <link rel="icon" href="img/camera-logo-16.png" type="image/png" />
-    <title>best photo shot</title>
+
+    <title>TechStore</title>
   </head>
   <body onload="displayProdIndex()">
-    <!-- Navbar -->
-    <nav class="nav-container">
-      <!-- Website nav-menu -->
-      <ul class="nav-web">
-        <li>
-          <a href="index.html" id="logo" title="Home"
-            ><img src="img/camera-logo-24.png" alt="logo"
-          /></a>
-        </li>
-        <li><a href="products.html">Cameras</a></li>
-        <li><a href="#">Lences</a></li>
-        <li><a href="#">Accesories</a></li>
-        <li><a href="#">Tripods</a></li>
-        <li><a href="#">Lighting</a></li>
-        <li><a href="#">Video</a></li>
-        <li><a href="#">Drones</a></li>
-        <li><a href="#">Brands</a></li>
-        <li><a href="#">Special</a></li>
-      </ul>
-      <!-- Mobile nav-menu -->
-      <div class="nav-mobile">
-        <a href="index.html" id="logo" title="Home"
-          ><img src="img/camera-logo-24.png" alt="logo"
-        /></a>
-        <div id="myLinks">
-          <a href="products.html">Cameras</a>
-          <a href="#">Lences</a>
-          <a href="#">Tripods</a>
-          <a href="#">Lighting</a>
-          <a href="#">Video</a>
-          <a href="#">Drones</a>
-          <a href="#">Brands</a>
-          <a href="#">Special</a>
-        </div>
-        <a href="javascript:void(0);" class="icon" onclick="hamburgerMenu()">
-          <i class="fa fa-bars"></i>
+
+    <!-- ===== NAVBAR — PR #1 TechStore ===== -->
+    <nav class="navbar navbar-expand-lg ts-navbar">
+      <div class="container-fluid px-4">
+
+        <!-- Logo + Brand -->
+        <a class="navbar-brand ts-brand" href="index.html">
+          <i class="fa-solid fa-microchip ts-logo-icon"></i>
+          TechStore
+
         </a>
+
+        <!-- Hamburger (Bootstrap collapse) -->
+        <button
+          class="navbar-toggler ts-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarMenu"
+          aria-controls="navbarMenu"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="fa fa-bars"></i>
+        </button>
+
+        <!-- Links + Carrito -->
+        <div class="collapse navbar-collapse" id="navbarMenu">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-3">
+            <li class="nav-item">
+              <a class="nav-link ts-nav-link active" href="index.html">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link ts-nav-link" href="products.html">Productos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link ts-nav-link" href="shopping-cart.html">Carrito</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link ts-nav-link" href="#contacto">Contacto</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link ts-nav-link" href="nosotros.html">Nosotros</a>
+            </li>
+          </ul>
+
+          <!-- Icono carrito con badge JS -->
+          <div class="ts-cart-wrapper">
+            <a href="shopping-cart.html" class="ts-cart-link">
+              <i class="fa-solid fa-cart-shopping"></i>
+              <span class="ts-cart-badge" id="cart-count">0</span>
+            </a>
+          </div>
+        </div>
+
       </div>
     </nav>
-    <!-- Main -->
+    <!-- ===== FIN NAVBAR ===== -->
+
+    <!-- Main — sin cambios -->
     <main>
       <!-- Header -->
       <header class="header">
-        <h1 class="company-name">best photo shot</h1>
+        <h1 class="company-name">GameTech Store</h1>
         <div class="header-spans">
           <span class="search"
             ><i class="fas fa-search"></i
@@ -87,33 +122,24 @@
           </span>
         </div>
       </header>
-      <!-- Hero image -->
-      <section class="hero-section">
-        <div class="hero-image">
-          <img src="img/hero_image.jpg" />
-          <div class="hero-overlay">
-            <div class="hero-content">
-              <h1 class="hero-title">NEWS</h1>
-              <button class="hero-btn">Check out</button>
-            </div>
+      <!-- ===== HERO — PR #2 TechStore ===== -->
+      <section class="ts-hero">
+        <div class="ts-hero-overlay">
+          <div class="ts-hero-content">
+            <p class="ts-hero-subtitle">Bienvenido a TechStore</p>
+            <h1 class="ts-hero-title">
+              La mejor tecnología,<br />al mejor precio.
+            </h1>
+            <p class="ts-hero-desc">
+              Encuentra laptops, smartphones, accesorios y mucho más.
+            </p>
+            <a href="products.html" class="ts-hero-btn">
+              Ver productos <i class="fa-solid fa-arrow-right"></i>
+            </a>
           </div>
         </div>
       </section>
-      <!-- Hero image 2 -->
-      <section class="hero-section-2">
-        <div class="hero-image-2">
-          <img src="img/black-friday-concept-with-alarm-cart-space-2.jpg" />
-          <div class="hero-overlay">
-            <div class="hero-content-2">
-              <h1 class="hero-title-2">BLACK FRIDAY IS COMING!</h1>
-              <button class="hero-btn">Buy now</button>
-              <h1 class="hero-title-3">GREAT DEALS!</h1>
-              <p class="hero-desc">Priority access to Black Week</p>
-              <p class="hero-desc">for members Nov. 17 at 8 p.m.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <!-- ===== FIN HERO ===== -->
       <!-- Products section -->
       <section class="products-section">
         <h1 class="title">TRENDING NOW</h1>
@@ -125,42 +151,43 @@
         <div class="container-icons">
           <div class="cat-icon">
             <img src="img/drone_96.png" class="icon-circle" />
-            <h5 class="icon-title">Drones</h5>
+            <h5 class="icon-title">Torre / PC</h5>
           </div>
           <div class="cat-icon">
             <img src="img/camera_96.png" class="icon-circle" />
-            <h5 class="icon-title">Digital Cameras</h5>
+            <h5 class="icon-title">Laptops gaming</h5>
           </div>
           <div class="cat-icon">
             <img src="img/camera_lens_96.png" class="icon-circle" />
-            <h5 class="icon-title">Lens</h5>
+            <h5 class="icon-title">Monitores</h5>
           </div>
           <div class="cat-icon">
             <img src="img/flash_light_96.png" class="icon-circle" />
-            <h5 class="icon-title">Flash lamps</h5>
+            <h5 class="icon-title">Iluminación RGB</h5>
           </div>
           <div class="cat-icon">
             <img src="img/sling_bag_96.png" class="icon-circle" />
-            <h5 class="icon-title">Bags</h5>
+            <h5 class="icon-title">Mochilas</h5>
           </div>
         </div>
       </section>
     </main>
-    <!-- Footer -->
+
+    <!-- Footer — sin cambios -->
     <footer>
       <div class="footer-menu">
         <nav class="footer-nav-column">
           <ul class="footer-nav-container">
             <li class="li-title">SHOP</li>
-            <li><a href="#">Digital cameras</a></li>
-            <li><a href="#">Film cameras</a></li>
-            <li><a href="#">Lences</a></li>
-            <li><a href="#">Accesories</a></li>
-            <li><a href="#">Tripods</a></li>
-            <li><a href="#">Lighting</a></li>
-            <li><a href="#">Video & Drones</a></li>
+            <li><a href="#">Laptops gaming</a></li>
+            <li><a href="#">Bundles y packs</a></li>
+            <li><a href="#">Monitores</a></li>
+            <li><a href="#">Accesorios</a></li>
+            <li><a href="#">Periféricos</a></li>
+            <li><a href="#">RGB</a></li>
+            <li><a href="#">Streaming y captura</a></li>
             <li><a href="#">Brands</a></li>
-            <li><a href="#">Special</a></li>
+            <li><a href="#">Ofertas</a></li>
           </ul>
         </nav>
         <nav class="footer-nav-column">
@@ -234,7 +261,11 @@
           <p>Klarna.</p>
         </div>
       </div>
-      <p class="copyright">Copyright &copy; 2023 | Malgorzata Pick</p>
+      <p class="copyright">Copyright &copy; 2026 | GameTech Store — Grupo 4</p>
     </footer>
+
+    <!-- Bootstrap 5 JS (necesario para el hamburger collapse) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
   </body>
 </html>
