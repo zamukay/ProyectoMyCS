@@ -103,10 +103,17 @@ const createProd = (product, check) => {
   prodDesc.innerText = product.shortDesc || "";
   buttonMore.innerText = "Más información";
 
-  buttonMore.addEventListener("click", () => {
+  const navigateToDetail = () => {
     localStorage.setItem("selectedProduct", JSON.stringify(product));
-    window.location.href = "detalle.html";
-  });
+    window.location.href = `detalle.html?id=${encodeURIComponent(product.id)}`;
+  };
+
+  buttonMore.addEventListener("click", navigateToDetail);
+  imgProd.addEventListener("click", navigateToDetail);
+  nameProd.addEventListener("click", navigateToDetail);
+
+  imgProd.style.cursor = "pointer";
+  nameProd.style.cursor = "pointer";
 
   buttonProd.addEventListener("click", (e) => {
     e.stopPropagation();
@@ -250,9 +257,22 @@ const hamburgerMenu = () => {
 };
 
 const displayProductDetail = () => {
-  const raw = localStorage.getItem("selectedProduct");
-  if (!raw) return;
-  const selectedProduct = JSON.parse(raw);
+  const params = new URLSearchParams(window.location.search);
+  const productId = params.get("id");
+  let selectedProduct = null;
+
+  if (productId && window.CATALOGO_PRODUCTOS) {
+    selectedProduct = window.CATALOGO_PRODUCTOS.find((item) => item.id === productId);
+  }
+
+  if (!selectedProduct) {
+    const raw = localStorage.getItem("selectedProduct");
+    if (!raw) return;
+    selectedProduct = JSON.parse(raw);
+  }
+
+  if (!selectedProduct) return;
+  localStorage.setItem("selectedProduct", JSON.stringify(selectedProduct));
   const imgEl = document.querySelector(".product-detail img");
   const titleElement = document.querySelector(".product-detail .card-title");
   const priceElement = document.querySelector(".product-detail .price");
