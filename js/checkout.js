@@ -77,8 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
             event.stopPropagation();
             
-            // Validar si el carrito está vacío
-            if (cartItems.length === 0) {
+            // Validar si el carrito está vacío (leer estado actual)
+            const cartNow = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cartNow.length === 0) {
                 alert('No puedes procesar una compra con el carrito vacío.');
                 return;
             }
