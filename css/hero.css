@@ -1,0 +1,171 @@
+/* ============================================================
+   css/hero.css — TechStore
+   PR #2 → develop: Hero section + variables CSS globales
+   ============================================================ */
+
+/* ---------- Hero Section ---------- */
+.ts-hero {
+  position: relative;
+  width: 100%;
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+
+  /* Reemplazar por imagen cuando esté disponible:
+     background-image: url('../img/hero.jpg');
+     background-size: cover;
+     background-position: center;
+  */
+  background-color: var(--ts-bg);
+  background-image:
+    linear-gradient(
+      135deg,
+      rgba(3, 3, 3, 0.95) 0%,
+      rgba(29, 28, 41, 0.90) 55%,
+      rgba(0, 229, 176, 0.07) 100%
+    );
+  overflow: hidden;
+}
+
+/* Glow decorativo superior derecha */
+.ts-hero::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(0, 229, 176, 0.10) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Glow decorativo inferior izquierda */
+.ts-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -80px;
+  left: -80px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(0, 229, 176, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ---------- Contenido ---------- */
+.ts-hero-overlay {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 4rem 5%;
+}
+
+.ts-hero-content {
+  max-width: 680px;
+}
+
+/* Subtítulo */
+.ts-hero-subtitle {
+  font-family: var(--ts-font-heading);
+  font-size: 0.9rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--ts-accent);
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: ts-fadeInUp 0.6s ease 0.1s forwards;
+}
+
+/* Título principal */
+.ts-hero-title {
+  font-family: var(--ts-font-heading);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--ts-white);
+  line-height: 1.15;
+  letter-spacing: 1px;
+  margin-bottom: 1.25rem;
+  background-color: transparent !important;
+  opacity: 0;
+  animation: ts-fadeInUp 0.6s ease 0.25s forwards;
+}
+
+/* Descripción */
+.ts-hero-desc {
+  font-family: var(--ts-font-body);
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: var(--ts-text-muted);
+  margin-bottom: 2rem;
+  max-width: 500px;
+  line-height: 1.6;
+  opacity: 0;
+  animation: ts-fadeInUp 0.6s ease 0.4s forwards;
+}
+
+/* Botón CTA */
+.ts-hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--ts-accent);
+  color: var(--ts-bg);
+  font-family: var(--ts-font-heading);
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.85rem 2rem;
+  border: 2px solid var(--ts-accent);
+  border-radius: 4px;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background-color var(--ts-transition), color var(--ts-transition);
+  opacity: 0;
+  animation: ts-fadeInUp 0.6s ease 0.55s forwards;
+}
+
+.ts-hero-btn:hover {
+  background-color: transparent;
+  color: var(--ts-white);
+}
+
+/* ---------- Animación ---------- */
+@keyframes ts-fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .ts-hero-overlay {
+    padding: 3rem 5%;
+  }
+
+  .ts-hero-content {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .ts-hero-desc {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .ts-hero-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .ts-hero {
+    min-height: 75vh;
+  }
+
+  .ts-hero-overlay {
+    padding: 2rem 1.25rem;
+  }
+}
