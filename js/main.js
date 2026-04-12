@@ -3,6 +3,22 @@ const prodContProd = document.querySelector("#products");
 const prodContIndex = document.querySelector("#prod-index");
 const prodContCart = document.querySelector("#prod-cart");
 
+// Inicializar contenedor de notificaciones
+const initToastContainer = () => {
+  if (!document.getElementById('toast-container')) {
+    const container = document.createElement('div');
+    container.id = 'toast-container';
+    document.body.appendChild(container);
+  }
+};
+
+// Inicializar cuando el DOM esté listo
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initToastContainer);
+} else {
+  initToastContainer();
+}
+
 const arr = window.CATALOGO_PRODUCTOS || [];
 
 const getCart = () => {
@@ -35,6 +51,7 @@ const addToCart = (product, qty = 1) => {
     });
   }
   saveCart(cart);
+  notificarAgregado(product.name);
 };
 
 const removeLineFromCart = (productId) => {
@@ -246,6 +263,191 @@ const initDetalleAddToCart = () => {
 };
 
 document.addEventListener("DOMContentLoaded", initDetalleAddToCart);
+
+/**
+ * Función robusta para mostrar notificación de producto agregado
+ * @param {string} nombreProducto - Nombre del producto agregado
+ */
+const notificarAgregado = (nombreProducto = '') => {
+  try {
+    // Esperar a que el body esté disponible
+    if (!document.body) {
+      setTimeout(() => notificarAgregado(nombreProducto), 100);
+      return;
+    }
+
+    // Inyectar estilos CSS críticos si no existen
+    if (!document.getElementById('toast-styles')) {
+      const style = document.createElement('style');
+      style.id = 'toast-styles';
+      style.textContent = `
+        #toast-container {
+          position: fixed !important;
+          top: 20px !important;
+          right: 20px !important;
+          left: auto !important;
+          bottom: auto !important;
+          z-index: 99999 !important;
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 10px !important;
+          pointer-events: none !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          width: auto !important;
+          height: auto !important;
+        }
+        
+        .toast-notification {
+          pointer-events: auto !important;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    // Obtener o crear el contenedor
+    let container = document.getElementById('toast-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'toast-container';
+      document.body.appendChild(container);
+    }
+
+    // Crear elemento del toast
+    const toast = document.createElement('div');
+    toast.className = 'toast-notification';
+    toast.style.cssText = `
+      display: flex !important;
+      align-items: center !important;
+      gap: 16px !important;
+      background: linear-gradient(135deg, #00bc8c 0%, #009670 100%) !important;
+      color: white !important;
+      padding: 18px 20px !important;
+      border-radius: 10px !important;
+      box-shadow: 0 8px 24px rgba(0, 188, 140, 0.5), 0 0 0 1px rgba(0, 188, 140, 0.3) !important;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif !important;
+      font-weight: 700 !important;
+      font-size: 16px !important;
+      line-height: 1.5 !important;
+      min-width: 280px !important;
+      max-width: 380px !important;
+      opacity: 0 !important;
+      animation: slideInFromRight 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
+      margin: 0 !important;
+      border: none !important;
+      position: relative !important;
+    `;
+    
+    // Crear contenido del toast
+    const icon = document.createElement('span');
+    icon.className = 'toast-icon';
+    icon.innerHTML = '✓';
+    icon.style.cssText = `
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 32px !important;
+      height: 32px !important;
+      background: rgba(255, 255, 255, 0.3) !important;
+      border-radius: 50% !important;
+      flex-shrink: 0 !important;
+      font-weight: bold !important;
+      font-size: 18px !important;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15) !important;
+      min-width: 32px !important;
+    `;
+    
+    const message = document.createElement('span');
+    message.className = 'toast-message';
+    message.textContent = '¡Producto añadido con éxito!';
+    message.style.cssText = `
+      flex: 1 !important;
+      margin: 0 !important;
+    `;
+    
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'toast-close';
+    closeBtn.textContent = '×';
+    closeBtn.type = 'button';
+    closeBtn.style.cssText = `
+      background: rgba(255, 255, 255, 0.2) !important;
+      border: none !important;
+      color: white !important;
+      font-size: 20px !important;
+      cursor: pointer !important;
+      padding: 0 !important;
+      width: 32px !important;
+      height: 32px !important;
+      min-width: 32px !important;
+      flex-shrink: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border-radius: 4px !important;
+      transition: all 0.2s !important;
+      margin: 0 !important;
+    `;
+    
+    closeBtn.onmouseover = () => {
+      closeBtn.style.background = 'rgba(255, 255, 255, 0.35)';
+      closeBtn.style.transform = 'scale(1.1)';
+    };
+    closeBtn.onmouseout = () => {
+      closeBtn.style.background = 'rgba(255, 255, 255, 0.2)';
+      closeBtn.style.transform = 'scale(1)';
+    };
+    
+    closeBtn.onclick = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(320px)';
+      setTimeout(() => {
+        if (toast.parentElement) {
+          toast.remove();
+        }
+      }, 300);
+    };
+    
+    // Armar el toast
+    toast.appendChild(icon);
+    toast.appendChild(message);
+    toast.appendChild(closeBtn);
+    
+    // Agregar al contenedor
+    container.appendChild(toast);
+    
+    // Disparar animación de entrada con fuerza
+    requestAnimationFrame(() => {
+      toast.style.opacity = '1';
+    });
+    
+    // Remover automáticamente después de 4 segundos
+    setTimeout(() => {
+      if (toast.parentElement) {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(320px)';
+        setTimeout(() => {
+          if (toast.parentElement) {
+            toast.remove();
+          }
+        }, 300);
+      }
+    }, 4000);
+    
+    console.log('✅ Toast mostrado:', nombreProducto);
+  } catch (error) {
+    console.error('❌ Error al mostrar toast:', error);
+  }
+};
+
+/**
+ * Función alternativa para compatibilidad hacia atrás
+ * (llamada por código antiguo)
+ */
+const showToast = (message) => {
+  notificarAgregado();
+};
 
 const hamburgerMenu = () => {
   var x = document.getElementById("myLinks");
