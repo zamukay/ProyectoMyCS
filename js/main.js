@@ -3,6 +3,22 @@ const prodContProd = document.querySelector("#products");
 const prodContIndex = document.querySelector("#prod-index");
 const prodContCart = document.querySelector("#prod-cart");
 
+// Inicializar contenedor de notificaciones
+const initToastContainer = () => {
+  if (!document.getElementById('toast-container')) {
+    const container = document.createElement('div');
+    container.id = 'toast-container';
+    document.body.appendChild(container);
+  }
+};
+
+// Inicializar cuando el DOM esté listo
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initToastContainer);
+} else {
+  initToastContainer();
+}
+
 const arr = window.CATALOGO_PRODUCTOS || [];
 
 const getCart = () => {
@@ -35,6 +51,7 @@ const addToCart = (product, qty = 1) => {
     });
   }
   saveCart(cart);
+  notificarAgregado(product.name);
 };
 
 const removeLineFromCart = (productId) => {
@@ -239,6 +256,75 @@ const initDetalleAddToCart = () => {
 };
 
 document.addEventListener("DOMContentLoaded", initDetalleAddToCart);
+
+/**
+ * Función robusta para mostrar notificación de producto agregado
+ * @param {string} nombreProducto - Nombre del producto agregado
+ */
+const notificarAgregado = (nombreProducto = '') => {
+  // Obtener o crear el contenedor
+  let container = document.getElementById('toast-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'toast-container';
+    document.body.appendChild(container);
+  }
+
+  // Crear elemento del toast
+  const toast = document.createElement('div');
+  toast.className = 'toast-notification';
+  
+  // Crear contenido del toast
+  const icon = document.createElement('span');
+  icon.className = 'toast-icon';
+  icon.innerHTML = '✓';
+  
+  const message = document.createElement('span');
+  message.className = 'toast-message';
+  message.textContent = '¡Producto añadido con éxito!';
+  
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'toast-close';
+  closeBtn.textContent = '×';
+  closeBtn.type = 'button';
+  closeBtn.onclick = () => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 300);
+  };
+  
+  // Armar el toast
+  toast.appendChild(icon);
+  toast.appendChild(message);
+  toast.appendChild(closeBtn);
+  
+  // Agregar al contenedor
+  container.appendChild(toast);
+  
+  // Disparar animación de entrada
+  setTimeout(() => {
+    toast.classList.add('show');
+  }, 10);
+  
+  // Remover automáticamente después de 4 segundos
+  setTimeout(() => {
+    if (toast.parentElement) {
+      toast.classList.remove('show');
+      setTimeout(() => {
+        if (toast.parentElement) {
+          toast.remove();
+        }
+      }, 300);
+    }
+  }, 4000);
+};
+
+/**
+ * Función alternativa para compatibilidad hacia atrás
+ * (llamada por código antiguo)
+ */
+const showToast = (message) => {
+  notificarAgregado();
+};
 
 const hamburgerMenu = () => {
   var x = document.getElementById("myLinks");
