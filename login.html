@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Malgorzata Pick" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/login.css" rel="stylesheet" />
+    <script src="js/main.js" defer></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quantico&family=Roboto&family=Varela+Round&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://kit.fontawesome.com/3318035e44.js"></script>
+    <link rel="icon" href="img/camera-logo-16.png" type="image/png" />
+    <title>TechStore | Sesión</title>
+  </head>
+  <body>
+    <nav class="nav-container">
+      <ul class="nav-web">
+        <li>
+          <a href="index.html" id="logo" title="Home">
+            <img src="img/camera-logo-24.png" alt="logo" />
+          </a>
+        </li>
+        <li><a href="products.html">Catálogo</a></li>
+        <li><a href="#">Monitores</a></li>
+        <li><a href="#">Accesorios</a></li>
+        <li><a href="#">Periféricos</a></li>
+        <li><a href="#">RGB</a></li>
+        <li><a href="#">Streaming</a></li>
+        <li><a href="#">Audio</a></li>
+        <li><a href="#">Brands</a></li>
+        <li><a href="#">Ofertas</a></li>
+        <li><a href="login.html" class="active">Sesión</a></li>
+      </ul>
+      <div class="nav-mobile">
+        <a href="index.html" id="logo" title="Home">
+          <img src="img/camera-logo-24.png" alt="logo" />
+        </a>
+        <div id="myLinks">
+          <a href="products.html">Catálogo</a>
+          <a href="#">Monitores</a>
+          <a href="#">Accesorios</a>
+          <a href="#">Periféricos</a>
+          <a href="#">RGB</a>
+          <a href="#">Streaming</a>
+          <a href="#">Audio</a>
+          <a href="#">Brands</a>
+          <a href="#">Ofertas</a>
+          <a href="login.html" class="active">Sesión</a>
+        </div>
+        <a href="javascript:void(0);" class="icon" onclick="hamburgerMenu()">
+          <i class="fa fa-bars"></i>
+        </a>
+      </div>
+    </nav>
+
+    <main class="login-main">
+      <section class="login-card">
+        <h1>Iniciar sesión</h1>
+        <p>Accede a tu cuenta para continuar con tus compras y ver tu carrito guardado.</p>
+        <form id="login-form">
+          <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input id="email" type="email" placeholder="tucorreo@ejemplo.com" required />
+          </div>
+          <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input id="password" type="password" placeholder="********" required minlength="6" />
+          </div>
+          <button type="submit">Entrar</button>
+        </form>
+        <p class="login-footer">
+          ¿No tienes cuenta? <a href="contacto.html">Contáctanos</a>
+        </p>
+      </section>
+    </main>
+
+    <script>
+      const form = document.getElementById('login-form');
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        alert('Sesión de prueba enviada. Aquí podrías conectar con tu sistema de autenticación.');
+      });
+    </script>
+  </body>
+</html>
