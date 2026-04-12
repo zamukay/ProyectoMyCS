@@ -1,0 +1,195 @@
+/* ============================================================
+   css/navbar.css — TechStore
+   PR #1 → develop: Navbar completa
+   ============================================================ */
+
+/* ---------- Variables CSS globales (para todo el equipo) ---------- */
+:root {
+  --ts-bg:           #030303;
+  --ts-surface:      #1d1c29;
+  --ts-accent:       #00e5b0;
+  --ts-accent-dark:  #00b88c;
+  --ts-white:        #ffffff;
+  --ts-text-muted:   rgba(255, 255, 255, 0.65);
+  --ts-border:       rgba(0, 229, 176, 0.35);
+  --ts-shadow:       0px 1px 5px rgba(81, 80, 80, 0.7);
+  --ts-font-heading: 'Varela Round', Tahoma, Helvetica, Verdana, Arial, sans-serif;
+  --ts-font-body:    'Roboto', Tahoma, Helvetica, Verdana, Arial, sans-serif;
+  --ts-transition:   0.3s ease;
+}
+
+/* ---------- Resetear estilos de Bootstrap que rompen el proyecto ---------- */
+/* NEWS y otros h1 no deben tener fondo blanco por Bootstrap */
+.hero-title {
+  background-color: transparent !important;
+  color: #ffffff !important;
+}
+
+/* ---------- Navbar base ---------- */
+.ts-navbar {
+  background-color: var(--ts-surface) !important;
+  box-shadow: var(--ts-shadow);
+  padding: 0.75rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* ---------- Brand / Logo ---------- */
+.ts-brand {
+  font-family: var(--ts-font-heading);
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--ts-white) !important;
+  letter-spacing: 1px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color var(--ts-transition);
+}
+
+.ts-brand:hover {
+  color: var(--ts-accent) !important;
+}
+
+.ts-logo-icon {
+  color: var(--ts-accent);
+  font-size: 1.3rem;
+}
+
+/* ---------- Nav links ---------- */
+.ts-nav-link {
+  font-family: var(--ts-font-heading);
+  font-size: 1rem;
+  color: var(--ts-white) !important;
+  padding: 0.5rem 1.25rem !important;
+  border-bottom: 3px solid transparent;
+  text-decoration: none;
+  transition: color var(--ts-transition), border-color var(--ts-transition);
+  background-color: transparent !important;
+}
+
+.ts-nav-link:hover,
+.ts-nav-link.active {
+  color: var(--ts-accent) !important;
+  border-bottom: 3px solid var(--ts-accent);
+  background-color: transparent !important;
+}
+
+/* ---------- Hamburger button ---------- */
+/* Solo visible en mobile, Bootstrap lo maneja con navbar-expand-lg */
+.ts-toggler {
+  background-color: var(--ts-bg) !important;
+  border: 1px solid var(--ts-accent) !important;
+  color: var(--ts-white);
+  padding: 0.4rem 0.65rem;
+  font-size: 1rem;
+  transition: background-color var(--ts-transition);
+}
+
+/* Ocultar el ícono SVG blanco que Bootstrap pone por defecto */
+.ts-toggler .navbar-toggler-icon {
+  display: none !important;
+}
+
+/* Forzar que en desktop NO aparezca el botón hamburger */
+@media (min-width: 992px) {
+  .ts-toggler {
+    display: none !important;
+  }
+}
+
+.ts-toggler:hover {
+  background-color: var(--ts-accent) !important;
+  color: var(--ts-bg);
+}
+
+.ts-toggler:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--ts-accent);
+}
+
+/* ---------- Ocultar carrito duplicado del header original ---------- */
+.header .user-wrapper a {
+  display: none;
+}
+
+/* ---------- Mobile collapse ---------- */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    background-color: var(--ts-surface);
+    padding: 0.75rem 1rem;
+    border-top: 1px solid var(--ts-border);
+    margin-top: 0.5rem;
+  }
+
+  .ts-nav-link {
+    border-bottom: none !important;
+    padding: 0.75rem 0.5rem !important;
+    border-radius: 4px;
+  }
+
+  .ts-nav-link:hover,
+  .ts-nav-link.active {
+    background-color: var(--ts-accent) !important;
+    color: var(--ts-bg) !important;
+    border-bottom: none !important;
+  }
+
+  .ts-cart-wrapper {
+    margin: 0.5rem 0.5rem 0.25rem;
+  }
+}
+
+/* ---------- Cart icon + badge ---------- */
+.ts-cart-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.ts-cart-link {
+  position: relative;
+  color: var(--ts-white);
+  font-size: 1.25rem;
+  text-decoration: none;
+  padding: 0.25rem 0.5rem;
+  transition: color var(--ts-transition);
+}
+
+.ts-cart-link:hover {
+  color: var(--ts-accent);
+}
+
+/* Badge: círculo perfecto */
+.ts-cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background-color: var(--ts-accent);
+  color: var(--ts-bg);
+  font-family: var(--ts-font-heading);
+  font-size: 0.65rem;
+  font-weight: bold;
+  width: 18px;
+  height: 18px;
+  min-width: unset;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.ts-cart-badge.bump {
+  animation: ts-bump 0.2s ease;
+}
+
+@keyframes ts-bump {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.5); }
+  100% { transform: scale(1); }
+}
