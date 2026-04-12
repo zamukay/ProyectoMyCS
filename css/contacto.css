@@ -1,7 +1,6 @@
 /* ============================================================
    contacto.css — Página de Contacto
    Autor: Anthony Semblantes
-   Rama: feature/informe-qa
    Complementa css/styles.css del proyecto
    ============================================================ */
 
@@ -20,6 +19,11 @@
     max-width: 1200px;
     margin: 0 auto 3rem;
     align-items: start;
+}
+
+.contact-info-block,
+.contact-form-block {
+    min-height: 420px;
 }
 
 /* ── HEADER CONTACTO ──────────────────────────────────────── */
@@ -250,6 +254,18 @@
     opacity: 0.6;
     transform: none;
     cursor: not-allowed;
+}
+
+.contact-btn.sending {
+    background: linear-gradient(135deg, #0d6c5c 0%, #0b5b4d 100%);
+    color: #fff;
+}
+
+.contact-note {
+    font-size: 0.95rem;
+    color: #999;
+    margin-top: 1rem;
+    line-height: 1.6;
 }
 
 /* ── MENSAJES ─────────────────────────────────────────────── */
