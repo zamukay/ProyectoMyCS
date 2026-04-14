@@ -1,6 +1,5 @@
 /* ============================================================
-   css/hero.css — TechStore
-   PR #2 → develop: Hero section + variables CSS globales
+   Hero section + Why Us section
    ============================================================ */
 
 /* ---------- Hero Section ---------- */
@@ -51,7 +50,7 @@
   pointer-events: none;
 }
 
-/* ---------- Contenido ---------- */
+/* ---------- Contenido hero ---------- */
 .ts-hero-overlay {
   position: relative;
   z-index: 1;
@@ -63,7 +62,6 @@
   max-width: 680px;
 }
 
-/* Subtítulo */
 .ts-hero-subtitle {
   font-family: var(--ts-font-heading);
   font-size: 0.9rem;
@@ -75,7 +73,6 @@
   animation: ts-fadeInUp 0.6s ease 0.1s forwards;
 }
 
-/* Título principal */
 .ts-hero-title {
   font-family: var(--ts-font-heading);
   font-size: clamp(2rem, 5vw, 3.5rem);
@@ -88,7 +85,6 @@
   animation: ts-fadeInUp 0.6s ease 0.25s forwards;
 }
 
-/* Descripción */
 .ts-hero-desc {
   font-family: var(--ts-font-body);
   font-size: clamp(1rem, 2vw, 1.15rem);
@@ -100,7 +96,6 @@
   animation: ts-fadeInUp 0.6s ease 0.4s forwards;
 }
 
-/* Botón CTA */
 .ts-hero-btn {
   display: inline-flex;
   align-items: center;
@@ -126,7 +121,7 @@
   color: var(--ts-white);
 }
 
-/* ---------- Animación ---------- */
+/* ---------- Animación hero ---------- */
 @keyframes ts-fadeInUp {
   from {
     opacity: 0;
@@ -138,7 +133,90 @@
   }
 }
 
+/* ============================================================
+   Sección "Por qué elegirnos"
+   ============================================================ */
+.ts-why-us {
+  background-color: var(--ts-surface);
+  padding: 4rem 5%;
+  width: 100%;
+}
+
+.ts-why-us-title {
+  font-family: var(--ts-font-heading);
+  font-size: 1.8rem;
+  color: var(--ts-accent);
+  text-align: center;
+  letter-spacing: 1px;
+  margin-bottom: 2.5rem;
+  text-transform: uppercase;
+}
+
+.ts-why-us-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Tarjeta individual */
+.ts-why-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  border: 1px solid var(--ts-border);
+  border-radius: 8px;
+  background-color: var(--ts-bg);
+  transition: border-color var(--ts-transition), transform var(--ts-transition);
+
+  /* Estado inicial para animación scroll */
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.ts-why-card.ts-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease, transform 0.6s ease,
+              border-color var(--ts-transition);
+}
+
+.ts-why-card:hover {
+  border-color: var(--ts-accent);
+  transform: translateY(-4px);
+}
+
+.ts-why-icon {
+  font-size: 2rem;
+  color: var(--ts-accent);
+  margin-bottom: 1rem;
+}
+
+.ts-why-card-title {
+  font-family: var(--ts-font-heading);
+  font-size: 1rem;
+  color: var(--ts-white);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.5px;
+}
+
+.ts-why-card-desc {
+  font-family: var(--ts-font-body);
+  font-size: 0.9rem;
+  color: var(--ts-text-muted);
+  line-height: 1.5;
+}
+
 /* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .ts-why-us-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
   .ts-hero-overlay {
     padding: 3rem 5%;
@@ -168,4 +246,42 @@
   .ts-hero-overlay {
     padding: 2rem 1.25rem;
   }
+
+  .ts-why-us-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ts-why-us {
+    padding: 2.5rem 1.25rem;
+  }
+}
+
+/* ============================================================
+   Animación scroll — elementos generados dinámicamente
+   ============================================================ */
+
+/* Categorías e íconos — estado inicial */
+.cat-icon {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.cat-icon.ts-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Títulos de sección — estado inicial */
+.products-section .title,
+.icons-section .title {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.products-section .title.ts-visible,
+.icons-section .title.ts-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
