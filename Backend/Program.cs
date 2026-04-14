@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddControllers();
 
 builder.Services.AddDbContext<EcommerceDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -30,6 +31,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("AllowAll");
 app.UseHttpsRedirection();
+app.MapControllers();
 
 var summaries = new[]
 {
