@@ -1,8 +1,103 @@
 /**
  * Lógica para la página de Checkout.
- * Maneja la lectura del carrito desde localStorage, 
- * renderiza el resumen, y valida el formulario de envío.
+ * Maneja la lectura del carrito desde localStorage,
+ * renderiza el resumen, valida el formulario de envío
+ * y envía la orden al API mediante fetch.
  */
+
+/** URL base de la API — ajusta si tu backend corre en otro puerto */
+const API_BASE_URL = 'https://localhost:7001';
+
+/**
+ * Transforma los ítems del carrito (formato localStorage) al
+ * shape que espera el endpoint POST /api/orders (CreateOrderDto).
+ *
+ * @param {Array<{id:string|number, name:string, price:number|string, quantity:number|string}>} cartItems
+ * @returns {{ items: Array<{productId:number, quantity:number, unitPrice:number}> }}
+ */
+const buildOrderPayload = (cartItems) => ({
+    items: cartItems.map(item => ({
+        productId : parseInt(item.id, 10),
+        quantity  : parseInt(item.quantity, 10) || 1,
+        unitPrice : parseFloat(item.price)      || 0,
+    })),
+});
+
+/**
+ * Envía los datos de la orden al endpoint POST /api/orders.
+ * Incluye el JWT almacenado en localStorage en el header Authorization.
+ * Si la respuesta es exitosa limpia el carrito y redirige a confirmation.html.
+ *
+ * @param {Array} cartItems  - Ítems actuales del carrito.
+ * @param {HTMLButtonElement} submitBtn   - Botón de submit (para restaurar estado si hay error).
+ * @param {HTMLElement}       spinner     - Spinner que se muestra mientras procesa.
+ * @returns {Promise<void>}
+ */
+const submitOrder = async (cartItems, submitBtn, spinner) => {
+    // --- 1. Obtener token JWT ---
+    const token = localStorage.getItem('authToken')
+             || localStorage.getItem('token')
+             || sessionStorage.getItem('authToken')
+             || sessionStorage.getItem('token');
+
+    if (!token) {
+        alert('Debes iniciar sesión antes de completar tu compra.');
+        window.location.href = 'login.html';
+        return;
+    }
+
+    // --- 2. Construir payload ---
+    const payload = buildOrderPayload(cartItems);
+
+    try {
+        // --- 3. Llamada fetch al API ---
+        const response = await fetch(`${API_BASE_URL}/api/orders`, {
+            method : 'POST',
+            headers: {
+                'Content-Type' : 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify(payload),
+        });
+
+        if (response.ok) {
+            // --- 4a. Éxito: limpiar carrito y redirigir ---
+            localStorage.removeItem('cart');
+            window.location.href = 'confirmation.html';
+        } else if (response.status === 401) {
+            // Token expirado o inválido
+            alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+            localStorage.removeItem('authToken');
+            window.location.href = 'login.html';
+        } else {
+            // Otro error del servidor
+            const errorData = await response.json().catch(() => ({}));
+            const msg = errorData.message || `Error del servidor (${response.status}). Inténtalo de nuevo.`;
+            alert(msg);
+            // Restaurar botón para que el usuario pueda reintentar
+            _restoreSubmitButton(submitBtn, spinner);
+        }
+    } catch (networkError) {
+        // Error de red / servidor no disponible
+        console.error('Error al conectar con el servidor:', networkError);
+        alert('No se pudo conectar con el servidor. Verifica tu conexión o inténtalo más tarde.');
+        _restoreSubmitButton(submitBtn, spinner);
+    }
+};
+
+/**
+ * Restaura el botón de submit a su estado original tras un error.
+ * @param {HTMLButtonElement} btn
+ * @param {HTMLElement} spinner
+ */
+const _restoreSubmitButton = (btn, spinner) => {
+    btn.disabled = false;
+    const label = btn.querySelector('span:not(.spinner-border)');
+    if (label) label.textContent = 'Pagar Ahora';
+    const lockIcon = btn.querySelector('.bi-lock-fill');
+    if (lockIcon) lockIcon.classList.remove('d-none');
+    if (spinner)  spinner.classList.add('d-none');
+};
 
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Elementos del DOM
@@ -72,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 3. Validación de Formulario y Submit
     if (form) {
-        form.addEventListener('submit', event => {
+        form.addEventListener('submit', async event => {
             // Prevenir comportamiento por defecto siempre
             event.preventDefault();
             event.stopPropagation();
@@ -98,23 +193,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Todo válido, simular el procesamiento del pago
+            // Todo válido — actualizar estado UI y enviar al API
             form.classList.add('was-validated');
-            
-            // Cambiar estado del botón
+
+            // Bloquear botón y mostrar spinner mientras se procesa
             submitButton.disabled = true;
-            submitButton.querySelector('span:not(.spinner-border)').textContent = 'Procesando pago... ';
-            submitButton.querySelector('.bi-lock-fill').classList.add('d-none');
+            const labelSpan = submitButton.querySelector('span:not(.spinner-border)');
+            if (labelSpan) labelSpan.textContent = 'Procesando pago...';
+            submitButton.querySelector('.bi-lock-fill')?.classList.add('d-none');
             submitSpinner.classList.remove('d-none');
 
-            // Simulación de delay de red / API (2 segundos)
-            setTimeout(() => {
-                // Vaciar localStorage (excepto otras cosas preferidas, solo 'cart')
-                localStorage.removeItem('cart');
-                
-                // Redirigir a confirmación (hito siguiente)
-                window.location.href = 'confirmation.html';
-            }, 2000);
+            // Leer carrito fresco y enviar al endpoint real
+            const cartNowFresh = JSON.parse(localStorage.getItem('cart')) || [];
+            await submitOrder(cartNowFresh, submitButton, submitSpinner);
 
         }, false);
     }
