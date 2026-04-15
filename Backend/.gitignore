@@ -1,0 +1,15 @@
+# C# ignores
+[Bb]in/
+[Oo]bj/
+
+# SQLite DB
+ecommerce.db
+*.db
+*.db-shm
+*.db-wal
+
+# Visual Studio / VS Code
+.vs/
+.vscode/
+*.user
+*.suo

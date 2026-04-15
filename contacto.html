@@ -1,0 +1,333 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/contacto.css" rel="stylesheet" />
+    <script src="js/catalogo-productos.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/contacto.js" defer></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Quantico&family=Roboto&family=Varela+Round&display=swap" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/3318035e44.js"></script>
+    <link rel="icon" href="img/camera-logo-16.png" type="image/png" />
+    <title>GameTech Store | Contacto</title>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="nav-container">
+        <ul class="nav-web">
+            <li><a href="index.html" id="logo" title="Home"><img src="img/camera-logo-24.png" alt="logo" /></a></li>
+            <li><a href="products.html?category=catalogo">Catálogo</a></li>
+            <li><a href="products.html?category=monitores">Monitores</a></li>
+            <li><a href="products.html?category=accesorios">Accesorios</a></li>
+            <li><a href="products.html?category=perifericos">Periféricos</a></li>
+            <li><a href="products.html?category=rgb">RGB</a></li>
+            <li><a href="products.html?category=streaming">Streaming</a></li>
+            <li><a href="products.html?category=audio">Audio</a></li>
+            <li><a href="products.html?category=brands">Brands</a></li>
+            <li><a href="products.html?category=ofertas">Ofertas</a></li>
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="contacto.html" class="active">Contacto</a></li>
+        </ul>
+        <div class="nav-mobile">
+            <a href="index.html" id="logo" title="Home"><img src="img/camera-logo-24.png" alt="logo" /></a>
+            <div id="myLinks">
+                <a href="products.html?category=catalogo">Catálogo</a>
+                <a href="products.html?category=monitores">Monitores</a>
+                <a href="products.html?category=accesorios">Accesorios</a>
+                <a href="products.html?category=perifericos">Periféricos</a>
+                <a href="products.html?category=rgb">RGB</a>
+                <a href="products.html?category=streaming">Streaming</a>
+                <a href="products.html?category=audio">Audio</a>
+                <a href="products.html?category=brands">Brands</a>
+                <a href="products.html?category=ofertas">Ofertas</a>
+                <a href="nosotros.html">Nosotros</a>
+                <a href="contacto.html" class="active">Contacto</a>
+            </div>
+            <a href="javascript:void(0);" class="icon" onclick="hamburgerMenu()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Header -->
+        <header class="header">
+            <h1 class="company-name">GameTech Store</h1>
+            <div class="header-spans">
+                <span class="search">
+                    <i class="fas fa-search"></i>
+                    <input type="search" id="search-input" name="search" placeholder="Search" />
+                </span>
+                <span class="user-wrapper">
+                    <i class="fa-solid fa-heart"></i>
+                    <i class="fa-solid fa-user"></i>
+                    <a href="shopping-cart.html"><i class="fa-solid fa-cart-shopping" value="2"></i></a>
+                </span>
+            </div>
+        </header>
+
+        <!-- SECCIÓN CONTACTO -->
+        <section class="about-section">
+            <div class="about-container">
+
+                <!-- Título -->
+                <div class="about-header">
+                    <h1 class="page-title">CONTÁCTANOS</h1>
+                    <p class="tagline">¿Tienes alguna pregunta? Escríbenos y te responderemos a la brevedad</p>
+                </div>
+
+                <!-- Layout: info + formulario -->
+                <div class="contact-layout">
+
+                    <!-- Info de contacto -->
+                    <div class="contact-info-block">
+                        <h2 class="contact-block-title">Información de contacto</h2>
+
+                        <div class="contact-info-item">
+                            <div class="contact-icon-wrap">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-item-text">
+                                <strong>Ubicación</strong>
+                                <span>Ecuador — Ambato</span>
+                            </div>
+                        </div>
+
+                        <div class="contact-info-item">
+                            <div class="contact-icon-wrap">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-item-text">
+                                <strong>Email</strong>
+                                <span>grupo4@gmail.com</span>
+                            </div>
+                        </div>
+
+                        <div class="contact-info-item">
+                            <div class="contact-icon-wrap">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="contact-item-text">
+                                <strong>Disponibilidad</strong>
+                                <span>Lunes a Viernes, 9am – 5pm</span>
+                            </div>
+                        </div>
+
+                        <div class="contact-info-item">
+                            <div class="contact-icon-wrap">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-item-text">
+                                <strong>Teléfono</strong>
+                                <span>+593 99 354 1542</span>
+                            </div>
+                        </div>
+
+                        <div class="contact-social">
+                            <p>Síguenos en redes:</p>
+                            <div class="social-icons">
+                                <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+                                <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                                <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Formulario -->
+                    <div class="contact-form-block">
+                        <h2 class="contact-block-title">Envíanos un mensaje</h2>
+                        <form class="contact-form" onsubmit="handleContactSubmit(event)">
+
+                            <div class="form-group">
+                                <label for="nombre">Nombre completo <span class="required">*</span></label>
+                                <input type="text" id="nombre" name="nombre" placeholder="Ej: Juan Pérez" required />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Correo electrónico <span class="required">*</span></label>
+                                <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="asunto">Asunto</label>
+                                <input type="text" id="asunto" name="asunto" placeholder="¿En qué podemos ayudarte?" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="mensaje">Queja, sugerencia o duda <span class="required">*</span></label>
+                                <textarea id="mensaje" name="mensaje" rows="5" placeholder="Describe tu queja, sugerencia o duda aquí..." required></textarea>
+                            </div>
+
+                            <button type="submit" class="contact-btn">
+                                <i class="fas fa-paper-plane"></i>
+                                <span>Enviar mensaje</span>
+                            </button>
+
+                            <div id="form-success" class="form-success hidden" role="status" aria-live="polite">
+                                <i class="fas fa-check-circle"></i>
+                                ¡Mensaje enviado correctamente! Te responderemos pronto.
+                            </div>
+                            <div id="form-error" class="form-error hidden" role="alert" aria-live="assertive">
+                                <i class="fas fa-exclamation-circle"></i>
+                                Por favor completa todos los campos obligatorios.
+                            </div>
+                            <p class="contact-note">
+                                Tu mensaje será guardado y respondido en un plazo de 24 horas.
+                            </p>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats-section" style="margin-top:3rem;">
+                    <div class="stat-item">
+                        <h4 class="stat-number">6</h4>
+                        <p class="stat-label">Desarrolladores</p>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="stat-item">
+                        <h4 class="stat-number">24h</h4>
+                        <p class="stat-label">Tiempo de respuesta</p>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="stat-item">
+                        <h4 class="stat-number">100%</h4>
+                        <p class="stat-label">Comprometidos</p>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="stat-item">
+                        <h4 class="stat-number"><i class="fas fa-heart" style="font-size:1.8rem;color:#00e5b0"></i></h4>
+                        <p class="stat-label">Con pasión</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-menu">
+            <div class="footer-nav-column">
+                <nav class="footer-nav-container">
+                    <p class="li-title">Tienda</p>
+                    <ul>
+                        <li><a href="#">Cámaras</a></li>
+                        <li><a href="#">Lentes</a></li>
+                        <li><a href="#">Accesorios</a></li>
+                        <li><a href="#">Audio</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="footer-nav-column">
+                <nav class="footer-nav-container">
+                    <p class="li-title">Empresa</p>
+                    <ul>
+                        <li><a href="nosotros.html">Quiénes somos</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="footer-nav-column">
+                <nav class="footer-nav-container">
+                    <p class="li-title">Soporte</p>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Envíos</a></li>
+                        <li><a href="#">Devoluciones</a></li>
+                        <li><a href="#">Garantía</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="footer-nav-column">
+                <nav class="footer-nav-container">
+                    <p class="li-title">Newsletter</p>
+                    <div class="subscribe">
+                        <p>Suscríbete para recibir novedades</p>
+                        <input type="email" id="subscribe-input" placeholder="Tu email" />
+                        <button id="subscribe-btn">Suscribir</button>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <div class="social-media">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+        </div>
+        <div class="lang-pay">
+            <span class="language"><i class="fas fa-globe"></i> ES</span>
+            <div class="paying-methods">
+                <p>VISA</p><p>MC</p><p>PayPal</p>
+            </div>
+        </div>
+        <p class="copyright">© 2026 GameTech Store — Grupo 4</p>
+    </footer>
+
+    <script>
+        const API_URL = 'http://localhost:5222/api/contact';
+
+        async function handleContactSubmit(e) {
+            e.preventDefault();
+
+            const nombre  = document.getElementById('nombre').value.trim();
+            const email   = document.getElementById('email').value.trim();
+            const asunto  = document.getElementById('asunto').value.trim();
+            const mensaje = document.getElementById('mensaje').value.trim();
+            const success = document.getElementById('form-success');
+            const error   = document.getElementById('form-error');
+            const btn     = e.target.querySelector('.contact-btn span');
+
+            success.classList.add('hidden');
+            error.classList.add('hidden');
+
+            if (!nombre || !email || !mensaje) {
+                error.classList.remove('hidden');
+                return;
+            }
+
+            btn.textContent = 'Enviando...';
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name:    nombre,
+                        email:   email,
+                        subject: asunto || null,
+                        message: mensaje
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    success.classList.remove('hidden');
+                    e.target.reset();
+                } else {
+                    error.querySelector
+                        ? error.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${data.message || 'Error al enviar el mensaje.'}`
+                        : null;
+                    error.classList.remove('hidden');
+                }
+            } catch (err) {
+                error.innerHTML = '<i class="fas fa-exclamation-circle"></i> No se pudo conectar con el servidor. Intenta más tarde.';
+                error.classList.remove('hidden');
+            } finally {
+                btn.textContent = 'Enviar mensaje';
+            }
+        }
+    </script>
+</body>
+</html>

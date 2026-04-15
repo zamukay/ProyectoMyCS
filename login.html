@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Malgorzata Pick" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/login.css" rel="stylesheet" />
+    <script src="js/main.js" defer></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quantico&family=Roboto&family=Varela+Round&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://kit.fontawesome.com/3318035e44.js"></script>
+    <link rel="icon" href="img/camera-logo-16.png" type="image/png" />
+    <title>TechStore | Sesión</title>
+  </head>
+  <body>
+    <nav class="nav-container">
+      <ul class="nav-web">
+        <li>
+          <a href="index.html" id="logo" title="Home">
+            <img src="img/camera-logo-24.png" alt="logo" />
+          </a>
+        </li>
+        <li><a href="products.html?category=catalogo">Catálogo</a></li>
+        <li><a href="products.html?category=monitores">Monitores</a></li>
+        <li><a href="products.html?category=accesorios">Accesorios</a></li>
+        <li><a href="products.html?category=perifericos">Periféricos</a></li>
+        <li><a href="products.html?category=rgb">RGB</a></li>
+        <li><a href="products.html?category=streaming">Streaming</a></li>
+        <li><a href="products.html?category=audio">Audio</a></li>
+        <li><a href="products.html?category=brands">Brands</a></li>
+        <li><a href="products.html?category=ofertas">Ofertas</a></li>
+        <li><a href="login.html" class="active">Sesión</a></li>
+      </ul>
+      <div class="nav-mobile">
+        <a href="index.html" id="logo" title="Home">
+          <img src="img/camera-logo-24.png" alt="logo" />
+        </a>
+        <div id="myLinks">
+          <a href="products.html?category=catalogo">Catálogo</a>
+          <a href="products.html?category=monitores">Monitores</a>
+          <a href="products.html?category=accesorios">Accesorios</a>
+          <a href="products.html?category=perifericos">Periféricos</a>
+          <a href="products.html?category=rgb">RGB</a>
+          <a href="products.html?category=streaming">Streaming</a>
+          <a href="products.html?category=audio">Audio</a>
+          <a href="products.html?category=brands">Brands</a>
+          <a href="products.html?category=ofertas">Ofertas</a>
+          <a href="login.html" class="active">Sesión</a>
+        </div>
+        <a href="javascript:void(0);" class="icon" onclick="hamburgerMenu()">
+          <i class="fa fa-bars"></i>
+        </a>
+      </div>
+    </nav>
+
+    <main class="login-main">
+      <section class="login-card">
+        <h1>Iniciar sesión</h1>
+        <p>Accede a tu cuenta para continuar con tus compras y ver tu carrito guardado.</p>
+        <form id="login-form">
+          <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input id="email" type="email" placeholder="tucorreo@ejemplo.com" required />
+          </div>
+          <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input id="password" type="password" placeholder="********" required minlength="6" />
+          </div>
+          <p id="login-error" style="color: #ff4d4d; display: none;"></p>
+          <button type="submit">Entrar</button>
+        </form>
+        <hr style="margin: 20px 0; border: 1px solid #333;" />
+        <h4>Registro Rápido (Prueba)</h4>
+        <form id="register-form">
+          <div class="form-group">
+            <label for="reg-name">Nombre</label>
+            <input id="reg-name" type="text" placeholder="Tu Nombre" required />
+          </div>
+          <div class="form-group">
+            <label for="reg-email">Correo electrónico</label>
+            <input id="reg-email" type="email" placeholder="nuevo@ejemplo.com" required />
+          </div>
+          <div class="form-group">
+            <label for="reg-password">Contraseña</label>
+            <input id="reg-password" type="password" placeholder="********" required minlength="6" />
+          </div>
+          <p id="register-error" style="color: #ff4d4d; display: none;"></p>
+          <button type="submit" style="background:#00e5b0; color:#121212;">Registrarse</button>
+        </form>
+      </section>
+    </main>
+ 
+    <script>
+      const form = document.getElementById('login-form');
+      const errorElement = document.getElementById('login-error');
+      const regForm = document.getElementById('register-form');
+      const regError = document.getElementById('register-error');
+ 
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        errorElement.style.display = 'none';
+ 
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+ 
+        const apiUrl = 'http://localhost:5222/api/auth/login'; 
+ 
+        try {
+          const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+          });
+ 
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Error al iniciar sesión.');
+          }
+ 
+          const data = await response.json();
+          localStorage.setItem('jwt_token', data.token);
+          alert('¡Inicio de sesión exitoso!');
+          window.location.href = 'index.html';
+        } catch (error) {
+          errorElement.textContent = error.message;
+          errorElement.style.display = 'block';
+        }
+      });
+
+      regForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        regError.style.display = 'none';
+
+        const name = document.getElementById('reg-name').value;
+        const email = document.getElementById('reg-email').value;
+        const password = document.getElementById('reg-password').value;
+        const apiRegUrl = 'http://localhost:5222/api/auth/register'; 
+
+        try {
+          const response = await fetch(apiRegUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, password }),
+          });
+          if (!response.ok) {
+            const err = await response.json();
+            throw new Error(err.message || 'Error en registro');
+          }
+          alert('Registro automático exitoso. Ahora inicia sesión.');
+          document.getElementById('email').value = email;
+        } catch(e) {
+          regError.textContent = e.message;
+          regError.style.display = 'block';
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,114 +1,214 @@
-## 🛍️ Proyecto: Manejo y Configuración de Software (Parcial 1)
+# 🛒 GameTech Store
 
-### 📖 Descripción
-
-Este proyecto consiste en un **sitio web de e-commerce** desarrollado con **HTML5, SCSS y JavaScript**, enfocado en simular una tienda online moderna y responsiva.
-
-Incluye funcionalidades como:
-
-* Visualización de productos 🛒
-* Carrito de compras 🧺
-* Proceso de checkout 💳
-* Formulario de contacto 📩
-* Productos con variaciones de color mediante imágenes 🎨
+### 📚 Proyecto: Manejo y Configuración de Software
 
 ---
 
-### 🎯 Objetivos
+## 📖 Descripción
 
-* 💻 Desarrollar una interfaz atractiva y funcional
-* 🖼️ Implementar productos con variantes visuales (colores)
-* 🛒 Simular un sistema básico de carrito de compras
-* 📬 Crear un formulario de contacto funcional (simulado)
-* 📱 Garantizar diseño responsivo en múltiples dispositivos
+Este proyecto consiste en un **e-commerce web moderno**, desarrollado inicialmente con **HTML5, SCSS y JavaScript**, y actualmente evolucionando hacia una arquitectura completa con **Backend en C# Web API**.
+
+El sistema simula una tienda online y actualmente está evolucionando hacia un sistema real con integración de backend y base de datos.
+---
+
+## 🚀 Funcionalidades
+
+### 🎨 Frontend
+
+* 🛍️ Visualización de productos
+* 🛒 Carrito de compras dinámico
+* 💳 Proceso de checkout
+* 📩 Formulario de contacto
+* 🎨 Productos con variaciones visuales
+* 📱 Diseño responsive
+* ✨ Animaciones e interfaz moderna
 
 ---
 
-### 🧩 Estructura del Proyecto
+### ⚙️ Backend (En desarrollo)
 
-| Carpeta / Archivo | Descripción                       |
-| ----------------- | --------------------------------- |
-| `/css/`           | Estilos CSS 🎨                    |
-| `/scss/`          | Archivos fuente SCSS 💅           |
-| `/js/`            | Scripts JavaScript ⚙️             |
-| `/img/`           | Imágenes de productos 📸          |
-| `/lib/`           | Librerías externas 📚             |
-| `/mail/`          | Simulación de envío de correos ✉️ |
-| `index.html`      | Página principal 🏠               |
-| `shop.html`       | Página de tienda 🛍️              |
-| `cart.html`       | Carrito de compras 🛒             |
-| `checkout.html`   | Proceso de pago 💳                |
-| `detail.html`     | Detalles del producto 🔍          |
-| `contact.html`    | Página de contacto 📞             |
-| `.gitignore`      | Archivos ignorados 🚫             |
-| `README.md`       | Documentación del proyecto 📘     |
+* 🔐 Registro e inicio de sesión
+* 🔑 Autenticación con JWT
+* 📦 API REST para gestión de productos
+* 🧾 Gestión de órdenes
+* 📩 Almacenamiento de mensajes de contacto
+* 🗄️ Base de datos relacional (SQL Server)
 
 ---
 
-### ⚙️ Instalación y Configuración
+## 🏗️ Arquitectura del Proyecto
 
-#### 🔧 Requisitos
+### Frontend
 
-* 🌐 Navegador web moderno (Chrome, Edge, Firefox, etc.)
-* 🧠 Editor de código (recomendado: VS Code)
-* 🧰 Git instalado
+* HTML5
+* SCSS / CSS3
+* JavaScript
+* Bootstrap 5
 
-#### 🚀 Pasos
+### Backend
+
+* C# (ASP.NET Core Web API)
+* Entity Framework Core (Code First)
+
+---
+
+## 🗄️ Base de Datos
+
+Tablas principales:
+
+* Products
+* Users
+* Orders
+* OrderItems
+* ContactMessages
+
+---
+
+## 🌿 Flujo de Trabajo (Git Flow)
+
+El proyecto sigue la metodología **Git Flow**:
+
+* `main` → Producción
+* `develop` → Integración
+* `feature/*` → Nuevas funcionalidades
+
+### 🔧 Ramas destacadas
+
+#### Backend
+
+* `feature/api-core-setup`
+
+#### Frontend
+
+* `feature/header-hero`
+* `feature/why-us-animations`
+* `feature/ajustes-visuales-catalogo`
+* `feature/mejoras-interfaz-carrito`
+
+#### Funcionalidades
+
+* `feature/catalogo-productos`
+* `feature/fix-catalogos-productos`
+* `feature/detalle-carrito`
+* `feature/checkout-footer`
+* `feature/confirmation-footer`
+
+#### Usuario y contacto
+
+* `feature/login-ui`
+* `feature/contacto`
+* `feature/contacto-quienes-somos`
+* `feature/contacto-funcionalidad`
+
+---
+
+## 🧩 Estructura del Proyecto
+
+| Carpeta / Archivo    | Descripción           |
+| -------------------- | --------------------- |
+| `/css/`              | Estilos CSS           |
+| `/scss/`             | Estilos SCSS          |
+| `/js/`               | Scripts JS            |
+| `/img/`              | Imágenes              |
+| `/lib/`              | Librerías             |
+| `/mail/`             | Simulación de correos |
+| `index.html`         | Página principal      |
+| `products.html`      | Catálogo              |
+| `shopping-cart.html` | Carrito               |
+| `checkout.html`      | Checkout              |
+| `detalle.html`       | Detalle producto      |
+| `contacto.html`      | Contacto              |
+
+---
+
+## ⚙️ Instalación y Uso
+
+### 🔧 Requisitos
+
+* Navegador moderno
+* VS Code
+* Git
+
+---
+
+### 🚀 Frontend
 
 ```bash
-git clone https://github.com/zamukay/Proyecto1.git
-cd Proyecto1
+git clone https://github.com/zamukay/ProyectoMyCS.git
+cd ProyectoMyCS
 ```
 
-Luego abre:
+Abrir:
 
 ```bash
 index.html
 ```
 
-en tu navegador.
+---
+
+### ⚙️ Backend (Próximamente)
+
+1. Abrir en Visual Studio
+2. Configurar conexión
+3. Ejecutar migraciones:
+
+```bash
+update-database
+```
+
+4. Ejecutar API
 
 ---
 
-### 💡 Uso del Proyecto
+## 📡 Endpoints (API)
 
-* 🛍️ Explora productos en `shop.html`
-* 🛒 Añade productos en `cart.html`
-* 💳 Simula una compra en `checkout.html`
-* 🔍 Revisa detalles en `detail.html`
-* 📩 Usa el formulario en `contact.html`
+### Auth
 
----
+* POST `/api/auth/register`
+* POST `/api/auth/login`
 
-### 🖥️ Vista del Proyecto
+### Productos
 
-#### 🌐 Versión Web
+* GET `/api/products`
+* GET `/api/products/{id}`
 
-![Vista 1](./img/Online_Shop_1.png)
-![Vista 2](./img/Online_Shop_2.png)
-![Vista 3](./img/Online_Shop_3.png)
+### Órdenes
 
----
+* POST `/api/orders`
 
-#### 📱 Versión Mobile
+### Contacto
 
-<img src="./img/Online_Shop_6.png" width="300"/>  
-<img src="./img/Online_Shop_7.png" width="300"/>  
+* POST `/api/contact`
 
 ---
 
-### 🧑‍💻 Contribuciones
+## 🖥️ Vista del Proyecto
 
-Este proyecto es colaborativo. Para contribuir:
+### 🌐 Web
 
-1. Crea una rama con Git Flow:
+![Vista 1](./img/index.png)
+![Vista 2](./img/productos.png)
+![Vista 3](./img/shop.png)
+
+---
+
+### 📱 Mobile
+
+<img src="./img/game.png" width="300"/>  
+<img src="./img/feat.png" width="300"/>  
+
+---
+
+## 🧑‍💻 Contribución
+
+1. Crear rama:
 
 ```bash
 git flow feature start nombre-feature
 ```
 
-2. Realiza tus cambios y haz commit
-3. Finaliza la feature:
+2. Realizar cambios
+3. Finalizar:
 
 ```bash
 git flow feature finish nombre-feature
@@ -116,21 +216,26 @@ git flow feature finish nombre-feature
 
 ---
 
-### 🐞 Soporte
+## 📌 Estado del Proyecto
 
-Si encuentras errores:
+🚧 En desarrollo
 
-* 📌 Abre un issue en GitHub
+✔ Frontend funcional
+🔄 Integración con API en progreso
+🚧 Backend en desarrollo (API REST en C#)
+🔐 Implementación de autenticación con JWT en progreso
+🗄️ Integración con base de datos en proceso
 
 ---
 
-### 🙌 Créditos
+## 🙌 Créditos
 
-Proyecto académico desarrollado para la materia de
+Proyecto académico para la materia:
+
 **Manejo y Configuración de Software**
 
 ---
 
-### ⭐ Nota
+## ⭐ Nota
 
-Este proyecto es una **simulación académica**, no incluye pagos reales ni backend funcional.
+Este proyecto evolucionó de una simulación frontend a una arquitectura completa con backend y base de datos.

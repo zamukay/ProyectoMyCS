@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -13,8 +13,9 @@
       name="keywords"
       content="web design, webbdesign, e-commerce, e-handel, online shop, online boutique, onlinebutik, web developer, webbutvecklare, front-end developer, front-end-utvecklare, utvecklare, front-end, frontend, HTML, CSS, JavaScript, Malgorzata Pick"
     />
-    <link href="css/styles.css" rel="stylesheet" />
-    <script src="js/main.js" defer></script>
+    <link href="css/styles.css?v=4" rel="stylesheet" />
+    <script src="js/catalogo-productos.js" defer></script>
+    <script src="js/main.js?v=4" defer></script>
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Quantico&family=Roboto&family=Varela+Round&display=swap"
@@ -22,9 +23,9 @@
     />
     <script src="https://kit.fontawesome.com/3318035e44.js"></script>
     <link rel="icon" href="img/camera-logo-16.png" type="image/png" />
-    <title>best photo shot</title>
+    <title>GameTech Store</title>
   </head>
-  <body onload="displayProdCart(), displayProdIndex()">
+  <body onload="displayProdCart(); displayProdIndex();">
     <!-- Navbar -->
     <nav class="nav-container">
       <!-- Website nav-menu -->
@@ -34,15 +35,15 @@
             ><img src="img/camera-logo-24.png" alt="logo"
           /></a>
         </li>
-        <li><a href="products.html">Cameras</a></li>
-        <li><a href="#">Lences</a></li>
-        <li><a href="#">Accesories</a></li>
-        <li><a href="#">Tripods</a></li>
-        <li><a href="#">Lighting</a></li>
-        <li><a href="#">Video</a></li>
-        <li><a href="#">Drones</a></li>
-        <li><a href="#">Brands</a></li>
-        <li><a href="#">Special</a></li>
+        <li><a href="products.html?category=catalogo">Catálogo</a></li>
+        <li><a href="products.html?category=monitores">Monitores</a></li>
+        <li><a href="products.html?category=accesorios">Accesorios</a></li>
+        <li><a href="products.html?category=perifericos">Periféricos</a></li>
+        <li><a href="products.html?category=rgb">RGB</a></li>
+        <li><a href="products.html?category=streaming">Streaming</a></li>
+        <li><a href="products.html?category=audio">Audio</a></li>
+        <li><a href="products.html?category=brands">Brands</a></li>
+        <li><a href="products.html?category=ofertas">Ofertas</a></li>
       </ul>
       <!-- Mobile nav-menu -->
       <div class="nav-mobile">
@@ -50,14 +51,15 @@
           ><img src="img/camera-logo-24.png" alt="logo"
         /></a>
         <div id="myLinks">
-          <a href="products.html">Cameras</a>
-          <a href="#">Lences</a>
-          <a href="#">Tripods</a>
-          <a href="#">Lighting</a>
-          <a href="#">Video</a>
-          <a href="#">Drones</a>
-          <a href="#">Brands</a>
-          <a href="#">Special</a>
+          <a href="products.html?category=catalogo">Catálogo</a>
+          <a href="products.html?category=monitores">Monitores</a>
+          <a href="products.html?category=accesorios">Accesorios</a>
+          <a href="products.html?category=perifericos">Periféricos</a>
+          <a href="products.html?category=rgb">RGB</a>
+          <a href="products.html?category=streaming">Streaming</a>
+          <a href="products.html?category=audio">Audio</a>
+          <a href="products.html?category=brands">Brands</a>
+          <a href="products.html?category=ofertas">Ofertas</a>
         </div>
         <a href="javascript:void(0);" class="icon" onclick="hamburgerMenu()">
           <i class="fa fa-bars"></i>
@@ -68,7 +70,7 @@
     <main>
       <!-- Header -->
       <header class="header">
-        <h1 class="company-name">best photo shot</h1>
+        <h1 class="company-name">GameTech Store</h1>
         <div class="header-spans">
           <span class="search"
             ><i class="fas fa-search"></i
@@ -92,14 +94,14 @@
         <div class="shopping-cart">
           <h2 class="cart-title">SHOPPING CART</h2>
           <div class="cart-prod-container" id="prod-cart"></div>
-          <button>Continue Shopping</button>
+          <button type="button" onclick="location.href='products.html'">Seguir comprando</button>
         </div>
         <div class="order-summary">
           <h2 class="cart-title">ORDER SUMMARY</h2>
           <div class="order-summary-column">
             <div class="order-summary-row">
               <p>Subtotal</p>
-              <p>$898</p>
+              <p id="cart-subtotal-amount">$0.00</p>
             </div>
             <div class="order-summary-row">
               <p>Delivery</p>
@@ -111,10 +113,10 @@
             </div>
             <div class="order-summary-row">
               <p>Total</p>
-              <p>$898</p>
+              <p id="cart-total-amount">$0.00</p>
             </div>
             <div class="order-summary-column" id="buttons-column">
-              <button class="order-summary-button">CHECKOUT</button>
+              <button type="button" class="order-summary-button" onclick="location.href='checkout.html'">CHECKOUT</button>
               <button class="order-summary-button" id="paypal"></button>
               <button class="order-summary-button" id="klarna"></button>
             </div>
@@ -132,23 +134,23 @@
         <div class="container-icons">
           <div class="cat-icon">
             <img src="img/drone_96.png" class="icon-circle" />
-            <h5 class="icon-title">Drones</h5>
+            <h5 class="icon-title">Torre / PC</h5>
           </div>
           <div class="cat-icon">
             <img src="img/camera_96.png" class="icon-circle" />
-            <h5 class="icon-title">Digital Cameras</h5>
+            <h5 class="icon-title">Laptops gaming</h5>
           </div>
           <div class="cat-icon">
             <img src="img/camera_lens_96.png" class="icon-circle" />
-            <h5 class="icon-title">Lens</h5>
+            <h5 class="icon-title">Monitores</h5>
           </div>
           <div class="cat-icon">
             <img src="img/flash_light_96.png" class="icon-circle" />
-            <h5 class="icon-title">Flash lamps</h5>
+            <h5 class="icon-title">Iluminación RGB</h5>
           </div>
           <div class="cat-icon">
             <img src="img/sling_bag_96.png" class="icon-circle" />
-            <h5 class="icon-title">Bags</h5>
+            <h5 class="icon-title">Mochilas</h5>
           </div>
         </div>
       </section>
@@ -159,15 +161,15 @@
         <nav class="footer-nav-column">
           <ul class="footer-nav-container">
             <li class="li-title">SHOP</li>
-            <li><a href="#">Digital cameras</a></li>
-            <li><a href="#">Film cameras</a></li>
-            <li><a href="#">Lences</a></li>
-            <li><a href="#">Accesories</a></li>
-            <li><a href="#">Tripods</a></li>
-            <li><a href="#">Lighting</a></li>
-            <li><a href="#">Video & Drones</a></li>
+            <li><a href="#">Laptops gaming</a></li>
+            <li><a href="#">Bundles y packs</a></li>
+            <li><a href="#">Monitores</a></li>
+            <li><a href="#">Accesorios</a></li>
+            <li><a href="#">Periféricos</a></li>
+            <li><a href="#">RGB</a></li>
+            <li><a href="#">Streaming y captura</a></li>
             <li><a href="#">Brands</a></li>
-            <li><a href="#">Special</a></li>
+            <li><a href="#">Ofertas</a></li>
           </ul>
         </nav>
         <nav class="footer-nav-column">

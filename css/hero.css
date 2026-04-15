@@ -1,0 +1,287 @@
+/* ============================================================
+   Hero section + Why Us section
+   ============================================================ */
+
+/* ---------- Hero Section ---------- */
+.ts-hero {
+  position: relative;
+  width: 100%;
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+
+  /* Reemplazar por imagen cuando esté disponible:
+     background-image: url('../img/hero.jpg');
+     background-size: cover;
+     background-position: center;
+  */
+  background-color: var(--ts-bg);
+  background-image:
+    linear-gradient(
+      135deg,
+      rgba(3, 3, 3, 0.95) 0%,
+      rgba(29, 28, 41, 0.90) 55%,
+      rgba(0, 229, 176, 0.07) 100%
+    );
+  overflow: hidden;
+}
+
+/* Glow decorativo superior derecha */
+.ts-hero::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(0, 229, 176, 0.10) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Glow decorativo inferior izquierda */
+.ts-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -80px;
+  left: -80px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(0, 229, 176, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ---------- Contenido hero ---------- */
+.ts-hero-overlay {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 4rem 5%;
+}
+
+.ts-hero-content {
+  max-width: 680px;
+}
+
+.ts-hero-subtitle {
+  font-family: var(--ts-font-heading);
+  font-size: 0.9rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--ts-accent);
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: ts-fadeInUp 0.6s ease 0.1s forwards;
+}
+
+.ts-hero-title {
+  font-family: var(--ts-font-heading);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--ts-white);
+  line-height: 1.15;
+  letter-spacing: 1px;
+  margin-bottom: 1.25rem;
+  background-color: transparent !important;
+  opacity: 0;
+  animation: ts-fadeInUp 0.6s ease 0.25s forwards;
+}
+
+.ts-hero-desc {
+  font-family: var(--ts-font-body);
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: var(--ts-text-muted);
+  margin-bottom: 2rem;
+  max-width: 500px;
+  line-height: 1.6;
+  opacity: 0;
+  animation: ts-fadeInUp 0.6s ease 0.4s forwards;
+}
+
+.ts-hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--ts-accent);
+  color: var(--ts-bg);
+  font-family: var(--ts-font-heading);
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.85rem 2rem;
+  border: 2px solid var(--ts-accent);
+  border-radius: 4px;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background-color var(--ts-transition), color var(--ts-transition);
+  opacity: 0;
+  animation: ts-fadeInUp 0.6s ease 0.55s forwards;
+}
+
+.ts-hero-btn:hover {
+  background-color: transparent;
+  color: var(--ts-white);
+}
+
+/* ---------- Animación hero ---------- */
+@keyframes ts-fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================
+   Sección "Por qué elegirnos"
+   ============================================================ */
+.ts-why-us {
+  background-color: var(--ts-surface);
+  padding: 4rem 5%;
+  width: 100%;
+}
+
+.ts-why-us-title {
+  font-family: var(--ts-font-heading);
+  font-size: 1.8rem;
+  color: var(--ts-accent);
+  text-align: center;
+  letter-spacing: 1px;
+  margin-bottom: 2.5rem;
+  text-transform: uppercase;
+}
+
+.ts-why-us-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Tarjeta individual */
+.ts-why-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  border: 1px solid var(--ts-border);
+  border-radius: 8px;
+  background-color: var(--ts-bg);
+  transition: border-color var(--ts-transition), transform var(--ts-transition);
+
+  /* Estado inicial para animación scroll */
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.ts-why-card.ts-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease, transform 0.6s ease,
+              border-color var(--ts-transition);
+}
+
+.ts-why-card:hover {
+  border-color: var(--ts-accent);
+  transform: translateY(-4px);
+}
+
+.ts-why-icon {
+  font-size: 2rem;
+  color: var(--ts-accent);
+  margin-bottom: 1rem;
+}
+
+.ts-why-card-title {
+  font-family: var(--ts-font-heading);
+  font-size: 1rem;
+  color: var(--ts-white);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.5px;
+}
+
+.ts-why-card-desc {
+  font-family: var(--ts-font-body);
+  font-size: 0.9rem;
+  color: var(--ts-text-muted);
+  line-height: 1.5;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .ts-why-us-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .ts-hero-overlay {
+    padding: 3rem 5%;
+  }
+
+  .ts-hero-content {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .ts-hero-desc {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .ts-hero-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .ts-hero {
+    min-height: 75vh;
+  }
+
+  .ts-hero-overlay {
+    padding: 2rem 1.25rem;
+  }
+
+  .ts-why-us-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ts-why-us {
+    padding: 2.5rem 1.25rem;
+  }
+}
+
+/* ============================================================
+   Animación scroll — elementos generados dinámicamente
+   ============================================================ */
+
+/* Categorías e íconos — estado inicial */
+.cat-icon {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.cat-icon.ts-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Títulos de sección — estado inicial */
+.products-section .title,
+.icons-section .title {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.products-section .title.ts-visible,
+.icons-section .title.ts-visible {
+  opacity: 1;
+  transform: translateY(0);
+}

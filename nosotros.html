@@ -1,0 +1,281 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Malgorzata Pick" />
+    <meta name="description"
+        content="Malgorzata Pick | Web design | E-handel | E-commerce | Online shop | Online boutique | Onlinebutik" />
+    <meta name="keywords"
+        content="web design, webbdesign, e-commerce, e-handel, online shop, online boutique, onlinebutik, web developer, webbutvecklare, front-end developer, front-end-utvecklare, utvecklare, front-end, frontend, HTML, CSS, JavaScript, Malgorzata Pick" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <script src="js/catalogo-productos.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Quantico&family=Roboto&family=Varela+Round&display=swap"
+        rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/3318035e44.js"></script>
+    <link rel="icon" href="img/camera-logo-16.png" type="image/png" />
+    <title>GameTech Store | Nosotros</title>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Grupo 4",
+      "description": "Equipo de desarrollo web dedicado a la creación de plataformas e-commerce modernas y responsivas",
+      "url": "https://bestphotoshot.com",
+      "foundingDate": "2026",
+      "member": [
+        {"@type": "Person", "name": "Kevin Velasco", "jobTitle": "Líder del repositorio / DevOps"},
+        {"@type": "Person", "name": "Manuel Cusme", "jobTitle": "Frontend - Header & Hero"},
+        {"@type": "Person", "name": "Luis Miranda", "jobTitle": "Frontend - Catálogo de productos"},
+        {"@type": "Person", "name": "Manolo García", "jobTitle": "Frontend - Detalle & Carrito"},
+        {"@type": "Person", "name": "Emilio Abril", "jobTitle": "Frontend - Checkout & Footer"},
+        {"@type": "Person", "name": "Anthony Semblantes", "jobTitle": "QA / Documentación / Presentación"}
+      ]
+    }
+    </script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="nav-container">
+        <!-- Website nav-menu -->
+        <ul class="nav-web">
+            <li>
+                <a href="index.html" id="logo" title="Home"><img src="img/camera-logo-24.png" alt="logo" /></a>
+            </li>
+            <li><a href="products.html?category=catalogo">Catálogo</a></li>
+            <li><a href="products.html?category=monitores">Monitores</a></li>
+            <li><a href="products.html?category=accesorios">Accesorios</a></li>
+            <li><a href="products.html?category=perifericos">Periféricos</a></li>
+            <li><a href="products.html?category=rgb">RGB</a></li>
+            <li><a href="products.html?category=streaming">Streaming</a></li>
+            <li><a href="products.html?category=audio">Audio</a></li>
+            <li><a href="products.html?category=brands">Brands</a></li>
+            <li><a href="products.html?category=ofertas">Ofertas</a></li>
+            <li><a href="nosotros.html" class="active">Nosotros</a></li>
+        </ul>
+        <!-- Mobile nav-menu -->
+        <div class="nav-mobile">
+            <a href="index.html" id="logo" title="Home"><img src="img/camera-logo-24.png" alt="logo" /></a>
+            <div id="myLinks">
+                <a href="products.html?category=catalogo">Catálogo</a>
+                <a href="products.html?category=monitores">Monitores</a>
+                <a href="products.html?category=accesorios">Accesorios</a>
+                <a href="products.html?category=perifericos">Periféricos</a>
+                <a href="products.html?category=rgb">RGB</a>
+                <a href="products.html?category=streaming">Streaming</a>
+                <a href="products.html?category=audio">Audio</a>
+                <a href="products.html?category=brands">Brands</a>
+                <a href="products.html?category=ofertas">Ofertas</a>
+                <a href="nosotros.html" class="active">Nosotros</a>
+            </div>
+            <a href="javascript:void(0);" class="icon" onclick="hamburgerMenu()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+    </nav>
+    <!-- Main -->
+    <main>
+        <!-- Header -->
+        <header class="header">
+            <h1 class="company-name">GameTech Store</h1>
+            <div class="header-spans">
+                <span class="search"><i class="fas fa-search"></i><input type="search" id="search-input" name="search"
+                        placeholder="Search" /></span>
+                <span class="user-wrapper">
+                    <i class="fa-solid fa-heart"></i>
+                    <i class="fa-solid fa-user"></i>
+                    <a href="shopping-cart.html"><i class="fa-solid fa-cart-shopping" value="2"></i></a>
+                </span>
+            </div>
+        </header>
+        <!-- About Us Section -->
+        <section class="about-section">
+            <div class="about-container">
+                <!-- Header principal -->
+                <div class="about-header">
+                    <h1 class="page-title">QUIÉNES SOMOS</h1>
+                    <p class="tagline">Grupo 4 - Un equipo dedicado a la excelencia en desarrollo web</p>
+                </div>
+
+                <!-- Contenedor de 3 columnas -->
+                <div class="about-grid">
+                    <!-- Columna 1: Descripción -->
+                    <div class="info-card mission-card">
+                        <div class="card-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h3 class="card-title">Nuestra Misión</h3>
+                        <p class="card-text">
+                            Somos el <strong>Grupo 4</strong>, un equipo de <strong>6 desarrolladores</strong> enfocados en la creación de un e-commerce de tecnología. Nuestro proyecto integra buenas prácticas de desarrollo colaborativo utilizando <strong>Git y GitFlow</strong>, simulando un entorno profesional real.
+                        </p>
+                        <div class="card-highlight">
+                            <span class="badge">Frontend</span>
+                            <span class="badge">E-Commerce</span>
+                            <span class="badge">Responsive</span>
+                        </div>
+                    </div>
+
+                    <!-- Columna 2: Objetivo -->
+                    <div class="info-card objective-card">
+                        <div class="card-icon">
+                            <i class="fas fa-target"></i>
+                        </div>
+                        <h3 class="card-title">Nuestro Objetivo</h3>
+                        <p class="card-text">
+                            Desarrollar una plataforma <strong>moderna, intuitiva y responsiva</strong> que permita a los usuarios explorar productos, agregarlos a un carrito y simular una experiencia de compra completa.
+                        </p>
+                        <div class="card-features">
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Interfaz moderna</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Escalable</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Eficiente</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Columna 3: Valores -->
+                    <div class="info-card values-card">
+                        <div class="card-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3 class="card-title">Nuestros Valores</h3>
+                        <ul class="values-list">
+                            <li><i class="fas fa-star"></i> Trabajo colaborativo</li>
+                            <li><i class="fas fa-star"></i> Buenas prácticas</li>
+                            <li><i class="fas fa-star"></i> Código modular</li>
+                            <li><i class="fas fa-star"></i> Calidad constante</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Estadísticas -->
+                <div class="stats-section">
+                    <div class="stat-item">
+                        <h4 class="stat-number">6</h4>
+                        <p class="stat-label">Desarrolladores</p>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="stat-item">
+                        <h4 class="stat-number">4</h4>
+                        <p class="stat-label">Módulos</p>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="stat-item">
+                        <h4 class="stat-number">100%</h4>
+                        <p class="stat-label">Responsivo</p>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="stat-item">
+                        <h4 class="stat-number">∞</h4>
+                        <p class="stat-label">Posibilidades</p>
+                    </div>
+                </div>
+
+                <!-- EQUIPO -->
+                <h2 class="team-section-title">👥 Nuestro Equipo</h2>
+                <div class="team-container">
+
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="img/kevin.png" alt="Kevin Velasco">
+                        </div>
+                        <h3>Kevin Velasco</h3>
+                        <p class="role">Líder del repositorio / DevOps</p>
+                        <p class="description">Encargado de la configuración del proyecto, control de versiones y gestión de ramas mediante GitFlow.</p>
+                        <div class="social-icons">
+                            <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://github.com/Sax300-cpu" title="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="img/manuel1.jpg" alt="Manuel Cusme">
+                        </div>
+                        <h3>Manuel Cusme</h3>
+                        <p class="role">Frontend - Header & Hero</p>
+                        <p class="description">Responsable de la interfaz principal, navegación y primera impresión del usuario.</p>
+                        <div class="social-icons">
+                            <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://github.com/ManuelCusme" title="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="img/Luis.png" alt="Luis Miranda">
+                        </div>
+                        <h3>Luis Miranda</h3>
+                        <p class="role">Frontend - Catálogo de productos</p>
+                        <p class="description">Encargado del sistema de visualización, filtrado y organización de productos.</p>
+                        <div class="social-icons">
+                            <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://github.com/LuisMiranda0" title="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="img/manolo.jpg" alt="Manolo García">
+                        </div>
+                        <h3>Manolo García</h3>
+                        <p class="role">Frontend - Detalle & Carrito</p>
+                        <p class="description">Responsable de la lógica del carrito de compras y almacenamiento en el navegador.</p>
+                        <div class="social-icons">
+                            <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://github.com/Garcia2501" title="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="img/emilio.jpg" alt="Emilio Abril">
+                        </div>
+                        <h3>Emilio Abril</h3>
+                        <p class="role">Frontend - Checkout & Footer</p>
+                        <p class="description">Encargado del proceso de compra, validaciones y estructura final del sitio.</p>
+                        <div class="social-icons">
+                            <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://github.com/EMILIOABRIL05" title="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="img/Anthony.jpg" alt="Anthony Semblantes">
+                        </div>
+                        <h3>Anthony Semblantes</h3>
+                        <p class="role">QA / Documentación / Presentación</p>
+                        <p class="description">Responsable del control de calidad, documentación del proyecto y coordinación de la presentación final.</p>
+                        <div class="social-icons">
+                            <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://github.com/zamukay" title="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>
