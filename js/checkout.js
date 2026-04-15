@@ -6,7 +6,7 @@
  */
 
 /** URL base de la API — ajusta si tu backend corre en otro puerto */
-const API_BASE_URL = 'https://localhost:7001';
+const API_BASE_URL = 'http://localhost:5222';
 
 /**
  * Transforma los ítems del carrito (formato localStorage) al
@@ -48,10 +48,9 @@ const clearCartData = () => {
  */
 const submitOrder = async (cartItems, submitBtn, spinner) => {
     // --- 1. Obtener token JWT ---
-    const token = localStorage.getItem('authToken')
-             || localStorage.getItem('token')
-             || sessionStorage.getItem('authToken')
-             || sessionStorage.getItem('token');
+    const token = localStorage.getItem('jwt_token')
+             || localStorage.getItem('authToken')
+             || localStorage.getItem('token');
 
     if (!token) {
         alert('Debes iniciar sesión antes de completar tu compra.');

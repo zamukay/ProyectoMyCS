@@ -74,15 +74,32 @@
           <p id="login-error" style="color: #ff4d4d; display: none;"></p>
           <button type="submit">Entrar</button>
         </form>
-        <p class="login-footer">
-          ¿No tienes cuenta? <a href="contacto.html">Contáctanos</a>
-        </p>
+        <hr style="margin: 20px 0; border: 1px solid #333;" />
+        <h4>Registro Rápido (Prueba)</h4>
+        <form id="register-form">
+          <div class="form-group">
+            <label for="reg-name">Nombre</label>
+            <input id="reg-name" type="text" placeholder="Tu Nombre" required />
+          </div>
+          <div class="form-group">
+            <label for="reg-email">Correo electrónico</label>
+            <input id="reg-email" type="email" placeholder="nuevo@ejemplo.com" required />
+          </div>
+          <div class="form-group">
+            <label for="reg-password">Contraseña</label>
+            <input id="reg-password" type="password" placeholder="********" required minlength="6" />
+          </div>
+          <p id="register-error" style="color: #ff4d4d; display: none;"></p>
+          <button type="submit" style="background:#00e5b0; color:#121212;">Registrarse</button>
+        </form>
       </section>
     </main>
  
     <script>
       const form = document.getElementById('login-form');
       const errorElement = document.getElementById('login-error');
+      const regForm = document.getElementById('register-form');
+      const regError = document.getElementById('register-error');
  
       form.addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -91,8 +108,7 @@
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
  
-        // Reemplaza con la URL de tu API si es diferente
-        const apiUrl = 'https://localhost:7035/api/auth/login'; 
+        const apiUrl = 'http://localhost:5222/api/auth/login'; 
  
         try {
           const response = await fetch(apiUrl, {
@@ -111,10 +127,37 @@
           const data = await response.json();
           localStorage.setItem('jwt_token', data.token);
           alert('¡Inicio de sesión exitoso!');
-          window.location.href = 'index.html'; // Redirigir a la página principal
+          window.location.href = 'index.html';
         } catch (error) {
           errorElement.textContent = error.message;
           errorElement.style.display = 'block';
+        }
+      });
+
+      regForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        regError.style.display = 'none';
+
+        const name = document.getElementById('reg-name').value;
+        const email = document.getElementById('reg-email').value;
+        const password = document.getElementById('reg-password').value;
+        const apiRegUrl = 'http://localhost:5222/api/auth/register'; 
+
+        try {
+          const response = await fetch(apiRegUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, password }),
+          });
+          if (!response.ok) {
+            const err = await response.json();
+            throw new Error(err.message || 'Error en registro');
+          }
+          alert('Registro automático exitoso. Ahora inicia sesión.');
+          document.getElementById('email').value = email;
+        } catch(e) {
+          regError.textContent = e.message;
+          regError.style.display = 'block';
         }
       });
     </script>

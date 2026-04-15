@@ -1,4 +1,4 @@
-﻿// Variables
+// Variables
 const prodContProd = document.querySelector("#products");
 const prodContIndex = document.querySelector("#prod-index");
 const prodContCart = document.querySelector("#prod-cart");
@@ -19,7 +19,7 @@ if (document.readyState === 'loading') {
   initToastContainer();
 }
 
-const API_BASE_URL = window.API_BASE_URL || "https://localhost:7035";
+const API_BASE_URL = window.API_BASE_URL || "http://localhost:5222";
 let cachedProducts = [];
 
 const normalizeProduct = (product) => {
