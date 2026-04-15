@@ -22,6 +22,77 @@ if (document.readyState === 'loading') {
 const API_BASE_URL = window.API_BASE_URL || "http://localhost:5222";
 let cachedProducts = [];
 
+const getCatalogCategory = () => {
+  const params = new URLSearchParams(window.location.search);
+  return (params.get("category") || "catalogo").toLowerCase();
+};
+
+const isAccessory = (product) => {
+  const text = `${product.name} ${product.shortDesc} ${product.description}`.toLowerCase();
+  const accessoryKeywords = [
+    "mouse",
+    "teclado",
+    "headset",
+    "auricular",
+    "mochila",
+    "cooler",
+    "pad",
+    "alfombrilla",
+    "base",
+  ];
+  return accessoryKeywords.some((word) => text.includes(word));
+};
+
+const getProductsByCategory = (products, category) => {
+  if (!Array.isArray(products)) return [];
+  const normalizedCategory = (category || "catalogo").toLowerCase();
+
+  switch (normalizedCategory) {
+    case "catalogo":
+      return products;
+    case "accesorios":
+      return products.filter((p) => isAccessory(p));
+    case "perifericos":
+      return products.filter((p) => {
+        const text = `${p.name} ${p.shortDesc} ${p.description}`.toLowerCase();
+        return (
+          text.includes("mouse") ||
+          text.includes("teclado") ||
+          text.includes("headset") ||
+          text.includes("auricular") ||
+          text.includes("pad") ||
+          text.includes("alfombrilla")
+        );
+      });
+    case "audio":
+      return products.filter((p) => {
+        const text = `${p.name} ${p.shortDesc} ${p.description}`.toLowerCase();
+        return text.includes("headset") || text.includes("auricular") || text.includes("audio");
+      });
+    case "rgb":
+      return products.filter((p) => {
+        const text = `${p.name} ${p.shortDesc} ${p.description}`.toLowerCase();
+        return text.includes("rgb");
+      });
+    case "streaming":
+      return products.filter((p) => {
+        const text = `${p.name} ${p.shortDesc} ${p.description}`.toLowerCase();
+        return text.includes("stream") || text.includes("microfono") || text.includes("captura");
+      });
+    case "monitores":
+      return products.filter((p) => {
+        const text = `${p.name} ${p.shortDesc} ${p.description}`.toLowerCase();
+        return text.includes("monitor");
+      });
+    case "brands":
+      return [...products].sort((a, b) => a.name.localeCompare(b.name));
+    case "ofertas":
+      return products.filter((p) => Number(p.price) <= 100);
+    default:
+      return products;
+  }
+};
+
 const normalizeProduct = (product) => {
   if (!product) return null;
   return {
@@ -111,12 +182,15 @@ const displayProducts = async () => {
   prodContProd.innerHTML = "";
   try {
     const products = await fetchProducts();
-    if (products.length === 0) {
+    const selectedCategory = getCatalogCategory();
+    const filteredProducts = getProductsByCategory(products, selectedCategory);
+
+    if (filteredProducts.length === 0) {
       prodContProd.innerHTML = "<p>No hay productos disponibles por ahora.</p>";
       return;
     }
-    for (let i = 0; i < products.length; i++) {
-      createProd(products[i], "prod");
+    for (let i = 0; i < filteredProducts.length; i++) {
+      createProd(filteredProducts[i], "prod");
     }
   } catch (error) {
     console.error(error);
