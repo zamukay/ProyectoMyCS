@@ -8,7 +8,7 @@ echo.
 
 :: Abrir el Backend en una nueva ventana de comandos
 echo [1/2] Iniciando el Backend en .NET...
-start "Backend API" cmd /k "cd Backend && dotnet run --urls ""http://0.0.0.0:5222"""
+start "Backend API" cmd /k "cd Backend && dotnet run --urls http://0.0.0.0:5222"
 
 :: Dar un par de segundos de espera para no saturar los logs iniciales
 timeout /t 3 /nobreak >nul
