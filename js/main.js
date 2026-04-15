@@ -19,7 +19,40 @@ if (document.readyState === 'loading') {
   initToastContainer();
 }
 
-const arr = window.CATALOGO_PRODUCTOS || [];
+const API_BASE_URL = window.API_BASE_URL || "https://localhost:7035";
+let cachedProducts = [];
+
+const normalizeProduct = (product) => {
+  if (!product) return null;
+  return {
+    id: product.id,
+    name: product.name || "Producto",
+    price: Number(product.price) || 0,
+    imgSrc: product.imgSrc || product.imageUrl || "img/laptop-02.jpg",
+    shortDesc: product.shortDesc || product.description || "Sin descripcion disponible.",
+    description: product.description || "",
+    category: product.category || "product",
+    specs: product.specs || null,
+  };
+};
+
+const fetchProducts = async () => {
+  if (cachedProducts.length > 0) return cachedProducts;
+  const response = await fetch(`${API_BASE_URL}/api/products`);
+  if (!response.ok) throw new Error("No se pudo cargar el catalogo.");
+  const products = await response.json();
+  cachedProducts = Array.isArray(products)
+    ? products.map(normalizeProduct).filter(Boolean)
+    : [];
+  return cachedProducts;
+};
+
+const fetchProductById = async (id) => {
+  const response = await fetch(`${API_BASE_URL}/api/products/${id}`);
+  if (!response.ok) return null;
+  const product = await response.json();
+  return normalizeProduct(product);
+};
 
 const getCart = () => {
   try {
@@ -73,18 +106,36 @@ const changeLineQuantity = (productId, delta) => {
   saveCart(cart);
 };
 
-const displayProducts = () => {
+const displayProducts = async () => {
   if (!prodContProd) return;
-  for (let i = 0; i < arr.length; i++) {
-    createProd(arr[i], "prod");
+  prodContProd.innerHTML = "";
+  try {
+    const products = await fetchProducts();
+    if (products.length === 0) {
+      prodContProd.innerHTML = "<p>No hay productos disponibles por ahora.</p>";
+      return;
+    }
+    for (let i = 0; i < products.length; i++) {
+      createProd(products[i], "prod");
+    }
+  } catch (error) {
+    console.error(error);
+    prodContProd.innerHTML = "<p>No se pudo cargar el catalogo en este momento.</p>";
   }
 };
 
-const displayProdIndex = () => {
+const displayProdIndex = async () => {
   if (!prodContIndex) return;
-  const n = Math.min(3, arr.length);
-  for (let i = 0; i < n; i++) {
-    createProd(arr[i], "index");
+  prodContIndex.innerHTML = "";
+  try {
+    const products = await fetchProducts();
+    const n = Math.min(3, products.length);
+    for (let i = 0; i < n; i++) {
+      createProd(products[i], "index");
+    }
+  } catch (error) {
+    console.error(error);
+    prodContIndex.innerHTML = "<p>No se pudieron cargar los productos destacados.</p>";
   }
 };
 
@@ -104,6 +155,8 @@ const displayProdCart = () => {
 };
 
 const createProd = (product, check) => {
+  const normalizedProduct = normalizeProduct(product);
+  if (!normalizedProduct) return;
   let divProd = document.createElement("div");
   let imgProd = document.createElement("img");
   let nameProd = document.createElement("h4");
@@ -113,16 +166,16 @@ const createProd = (product, check) => {
   let prodDesc = document.createElement("p");
   let buttonMore = document.createElement("button");
 
-  imgProd.src = product.imgSrc;
-  nameProd.innerText = product.name;
-  priceProd.innerText = "$" + product.price;
+  imgProd.src = normalizedProduct.imgSrc;
+  nameProd.innerText = normalizedProduct.name;
+  priceProd.innerText = "$" + normalizedProduct.price;
   buttonProd.innerText = "Añadir al carrito";
-  prodDesc.innerText = product.shortDesc || "";
+  prodDesc.innerText = normalizedProduct.shortDesc || "";
   buttonMore.innerText = "Más información";
 
   const navigateToDetail = () => {
-    localStorage.setItem("selectedProduct", JSON.stringify(product));
-    window.location.href = `detalle.html?id=${encodeURIComponent(product.id)}`;
+    localStorage.setItem("selectedProduct", JSON.stringify(normalizedProduct));
+    window.location.href = `detalle.html?id=${encodeURIComponent(normalizedProduct.id)}`;
   };
 
   buttonMore.addEventListener("click", navigateToDetail);
@@ -134,7 +187,7 @@ const createProd = (product, check) => {
 
   buttonProd.addEventListener("click", (e) => {
     e.stopPropagation();
-    addToCart(product, 1);
+    addToCart(normalizedProduct, 1);
   });
 
   priceProd.className = "price";
@@ -458,19 +511,19 @@ const hamburgerMenu = () => {
   }
 };
 
-const displayProductDetail = () => {
+const displayProductDetail = async () => {
   const params = new URLSearchParams(window.location.search);
   const productId = params.get("id");
   let selectedProduct = null;
 
-  if (productId && window.CATALOGO_PRODUCTOS) {
-    selectedProduct = window.CATALOGO_PRODUCTOS.find((item) => item.id === productId);
+  if (productId) {
+    selectedProduct = await fetchProductById(productId);
   }
 
   if (!selectedProduct) {
     const raw = localStorage.getItem("selectedProduct");
     if (!raw) return;
-    selectedProduct = JSON.parse(raw);
+    selectedProduct = normalizeProduct(JSON.parse(raw));
   }
 
   if (!selectedProduct) return;
@@ -488,7 +541,7 @@ const displayProductDetail = () => {
   priceElement.style.color = "#00e5b0";
 
   const s = selectedProduct.specs || {};
-  if (selectedProduct.category === "laptop") {
+  if (selectedProduct.category === "laptop" && selectedProduct.specs) {
     specsContainer.innerHTML = `
       <h4 class="mb-3" style="color:#00e5b0;">Especificaciones técnicas</h4>
       <div class="spec-item d-flex align-items-center mb-3">
@@ -522,7 +575,7 @@ const displayProductDetail = () => {
         </div>
       </div>
     `;
-  } else {
+  } else if (selectedProduct.specs) {
     specsContainer.innerHTML = `
       <h4 class="mb-3" style="color:#00e5b0;">Características</h4>
       <div class="spec-item d-flex align-items-center mb-3">
@@ -543,6 +596,13 @@ const displayProductDetail = () => {
           <strong style="color:#fff;">Compatibilidad:</strong> <span style="color:#00e5b0;">${s.compatibilidad}</span>
         </div>
       </div>
+    `;
+  } else {
+    specsContainer.innerHTML = `
+      <h4 class="mb-3" style="color:#00e5b0;">Descripcion del producto</h4>
+      <p style="color:#fff;">
+        ${selectedProduct.description || "No hay detalles adicionales para este producto."}
+      </p>
     `;
   }
 };
