@@ -71,6 +71,7 @@
             <label for="password">Contraseña</label>
             <input id="password" type="password" placeholder="********" required minlength="6" />
           </div>
+          <p id="login-error" style="color: #ff4d4d; display: none;"></p>
           <button type="submit">Entrar</button>
         </form>
         <p class="login-footer">
@@ -78,12 +79,43 @@
         </p>
       </section>
     </main>
-
+ 
     <script>
       const form = document.getElementById('login-form');
-      form.addEventListener('submit', (event) => {
+      const errorElement = document.getElementById('login-error');
+ 
+      form.addEventListener('submit', async (event) => {
         event.preventDefault();
-        alert('Sesión de prueba enviada. Aquí podrías conectar con tu sistema de autenticación.');
+        errorElement.style.display = 'none';
+ 
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+ 
+        // Reemplaza con la URL de tu API si es diferente
+        const apiUrl = 'https://localhost:7035/api/auth/login'; 
+ 
+        try {
+          const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+          });
+ 
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Error al iniciar sesión.');
+          }
+ 
+          const data = await response.json();
+          localStorage.setItem('jwt_token', data.token);
+          alert('¡Inicio de sesión exitoso!');
+          window.location.href = 'index.html'; // Redirigir a la página principal
+        } catch (error) {
+          errorElement.textContent = error.message;
+          errorElement.style.display = 'block';
+        }
       });
     </script>
   </body>
