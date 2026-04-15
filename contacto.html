@@ -178,7 +178,7 @@
                                 Por favor completa todos los campos obligatorios.
                             </div>
                             <p class="contact-note">
-                                Este mensaje no se envía realmente por correo; es una confirmación visual dentro de esta página.
+                                Tu mensaje será guardado y respondido en un plazo de 24 horas.
                             </p>
                         </form>
                     </div>
@@ -274,13 +274,18 @@
     </footer>
 
     <script>
-        function handleContactSubmit(e) {
+        const API_URL = 'http://localhost:5222/api/contact';
+
+        async function handleContactSubmit(e) {
             e.preventDefault();
+
             const nombre  = document.getElementById('nombre').value.trim();
             const email   = document.getElementById('email').value.trim();
+            const asunto  = document.getElementById('asunto').value.trim();
             const mensaje = document.getElementById('mensaje').value.trim();
             const success = document.getElementById('form-success');
             const error   = document.getElementById('form-error');
+            const btn     = e.target.querySelector('.contact-btn span');
 
             success.classList.add('hidden');
             error.classList.add('hidden');
@@ -290,14 +295,37 @@
                 return;
             }
 
-            const btn = e.target.querySelector('.contact-btn span');
             btn.textContent = 'Enviando...';
 
-            setTimeout(() => {
-                success.classList.remove('hidden');
-                e.target.reset();
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name:    nombre,
+                        email:   email,
+                        subject: asunto || null,
+                        message: mensaje
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    success.classList.remove('hidden');
+                    e.target.reset();
+                } else {
+                    error.querySelector
+                        ? error.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${data.message || 'Error al enviar el mensaje.'}`
+                        : null;
+                    error.classList.remove('hidden');
+                }
+            } catch (err) {
+                error.innerHTML = '<i class="fas fa-exclamation-circle"></i> No se pudo conectar con el servidor. Intenta más tarde.';
+                error.classList.remove('hidden');
+            } finally {
                 btn.textContent = 'Enviar mensaje';
-            }, 1200);
+            }
         }
     </script>
 </body>
