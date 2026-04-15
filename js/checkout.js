@@ -24,6 +24,19 @@ const buildOrderPayload = (cartItems) => ({
 });
 
 /**
+ * Elimina del localStorage y sessionStorage todas las claves
+ * relacionadas a la sesión de compra: carrito, producto seleccionado, etc.
+ * Centralizar aquí evita olvidar limpiar alguna clave en el futuro.
+ */
+const clearCartData = () => {
+    // Datos del carrito
+    localStorage.removeItem('cart');
+    // Producto navegado desde detalle (puede quedar stale)
+    localStorage.removeItem('selectedProduct');
+    // Si en el futuro guardas un "pendingOrder" u otros temporales, agrégalos aquí
+};
+
+/**
  * Envía los datos de la orden al endpoint POST /api/orders.
  * Incluye el JWT almacenado en localStorage en el header Authorization.
  * Si la respuesta es exitosa limpia el carrito y redirige a confirmation.html.
@@ -61,8 +74,8 @@ const submitOrder = async (cartItems, submitBtn, spinner) => {
         });
 
         if (response.ok) {
-            // --- 4a. Éxito: limpiar carrito y redirigir ---
-            localStorage.removeItem('cart');
+            // --- 4a. Éxito: limpiar TODOS los datos de compra y redirigir ---
+            clearCartData();
             window.location.href = 'confirmation.html';
         } else if (response.status === 401) {
             // Token expirado o inválido
@@ -165,18 +178,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     renderOrderSummary();
 
-    // 3. Validación de Formulario y Submit
+    // 3. Sincronización reactiva del botón de compra
+    /**
+     * Habilita o deshabilita el botón de compra según si el carrito tiene productos.
+     * También actualiza el atributo title para dar feedback visual al usuario.
+     * Se llama al cargar la página y cada vez que el localStorage cambia
+     * (incluso desde otra pestaña gracias al evento 'storage').
+     */
+    const syncSubmitButton = () => {
+        const currentCart = JSON.parse(localStorage.getItem('cart')) || [];
+        const isEmpty = currentCart.length === 0;
+
+        submitButton.disabled = isEmpty;
+
+        if (isEmpty) {
+            submitButton.title = 'Agrega productos al carrito antes de pagar.';
+            submitButton.classList.add('btn-disabled-reason');
+        } else {
+            submitButton.title = '';
+            submitButton.classList.remove('btn-disabled-reason');
+        }
+    };
+
+    // Sincronizar al cargar
+    syncSubmitButton();
+
+    // Sincronizar si el carrito cambia desde otra pestaña del navegador
+    window.addEventListener('storage', (event) => {
+        if (event.key === 'cart') syncSubmitButton();
+    });
+
+    // 4. Validación de Formulario y Submit
     if (form) {
         form.addEventListener('submit', async event => {
             // Prevenir comportamiento por defecto siempre
             event.preventDefault();
             event.stopPropagation();
-            
-            // Validar si el carrito está vacío (leer estado actual)
+
+            // Doble-check del carrito en el momento exacto del submit
+            // (defensa ante race conditions o manipulación del DOM)
             const cartNow = JSON.parse(localStorage.getItem('cart')) || [];
             if (cartNow.length === 0) {
-                alert('No puedes procesar una compra con el carrito vacío.');
-                return;
+                syncSubmitButton(); // asegurar UI consistente
+                return;            // botón ya deshabilitado, salir silenciosamente
             }
 
             // Validar formulario HTML5 y Bootstrap
