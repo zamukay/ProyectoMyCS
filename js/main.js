@@ -19,7 +19,7 @@ if (document.readyState === 'loading') {
   initToastContainer();
 }
 
-const API_BASE_URL = window.API_BASE_URL || "http://localhost:5222";
+const API_BASE_URL = window.API_BASE_URL || `http://${window.location.hostname}:5222`;
 let cachedProducts = [];
 
 const getCatalogCategory = () => {

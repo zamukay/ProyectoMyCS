@@ -6,7 +6,7 @@
  */
 
 /** URL base de la API — ajusta si tu backend corre en otro puerto */
-const API_BASE_URL = 'http://localhost:5222';
+const API_BASE_URL = `http://${window.location.hostname}:5222`;
 
 /**
  * Transforma los ítems del carrito (formato localStorage) al
